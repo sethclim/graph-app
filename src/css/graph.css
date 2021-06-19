@@ -1,0 +1,22 @@
+#graph {
+  width: 480px;
+  height: 320px;
+  position: relative;
+  border: 2px solid black;
+  background-color: red;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#background-layer {
+  z-index: 1;
+}
+
+#foreground-layer {
+  z-index: 2;
+}
+/*# sourceMappingURL=graph.css.map */
