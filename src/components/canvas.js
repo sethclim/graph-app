@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 const Canvas = (props) => {
-  const { draw, ...rest } = props;
+  const { draw, onMyMouseMove, onMyMouseUp, ...rest } = props;
   const canvasRef = useRef(null);
 
   function resizeCanvasToDisplaySize(canvas) {
@@ -10,8 +10,7 @@ const Canvas = (props) => {
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;
       canvas.height = height;
-      return true; // here you can return some usefull information like delta width and delta height instead of just true
-      // this information can be used in the next redraw...
+      return true;
     }
 
     return false;
@@ -21,15 +20,22 @@ const Canvas = (props) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
+    canvas.addEventListener("mousemove", (event) => {
+      if (onMyMouseMove) onMyMouseMove(event);
+    });
+
+    window.addEventListener("mouseup", (event) => {
+      if (onMyMouseUp) onMyMouseUp(event);
+    });
+
     const render = () => {
-      console.log("Render called");
       resizeCanvasToDisplaySize(canvas);
-      draw(context);
+      if (draw !== null) draw(context);
     };
     render();
-  }, [draw]);
+  }, [draw, onMyMouseMove, onMyMouseUp]);
 
-  return <canvas ref={canvasRef} {...rest} />;
+  return <canvas id="canvas" ref={canvasRef} {...rest} />;
 };
 
 export default Canvas;
