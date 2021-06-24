@@ -1,8 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo, useState } from "react";
 
 const DrawCanvas = (props) => {
   const { pen, ...rest } = props;
   const canvasRef = useRef(null);
+  const [points, setPoints] = useState([]);
+  const [dots, setDots] = useState([]);
 
   function resizeCanvasToDisplaySize(canvas) {
     const { width, height } = canvas.getBoundingClientRect();
@@ -28,16 +30,16 @@ const DrawCanvas = (props) => {
     context.stroke();
   }
 
-  function drawDot(context, points) {
+  function drawDot(context, dots) {
     context.strokeStyle = "#ff0000";
     context.lineCap = "round";
     context.lineWidth = 5.0;
 
-    if (points.length !== 0) {
-      for (let i = 1; i < points.length; i++) {
+    if (dots.length !== 0) {
+      for (let i = 1; i < dots.length; i++) {
         context.fillStyle = "#ff0000";
         context.beginPath();
-        context.arc(points[i].x, points[i].y, 5, 0, 2 * Math.PI);
+        context.arc(dots[i].x, dots[i].y, 5, 0, 2 * Math.PI);
         context.fill();
       }
     }
@@ -48,41 +50,54 @@ const DrawCanvas = (props) => {
     const context = canvas.getContext("2d");
 
     var isDrawing;
-    var points = [];
-    var dots = [];
 
     resizeCanvasToDisplaySize(canvas);
 
-    canvas.addEventListener("mousedown", (e) => {
+    function mouseDown(e) {
       isDrawing = true;
-      if (pen) {
+      if (pen === true) {
         points.push({ x: e.clientX, y: e.clientY });
-      } else {
+      }
+      if (pen === false) {
         dots.push({ x: e.clientX, y: e.clientY });
       }
-    });
 
-    canvas.addEventListener("mousemove", (e) => {
+      executeDraw();
+    }
+
+    function mouseMove(e) {
       if (!isDrawing) return;
 
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
       if (pen) {
         points.push({ x: e.clientX, y: e.clientY });
-      } else {
-        //dots.push({ x: e.clientX, y: e.clientY });
       }
 
-      if (pen) {
-        drawLine(context, points);
-      } else {
-        drawDot(context, dots);
-      }
-    });
+      executeDraw();
+    }
 
-    window.addEventListener("mouseup", (e) => {
+    function mouseUp(e) {
       isDrawing = false;
-    });
-  }, [pen]);
+    }
+
+    function executeDraw() {
+      if (points !== undefined && points.length > 0) drawLine(context, points);
+
+      if (dots !== undefined && dots.length > 0) drawDot(context, dots);
+    }
+
+    canvas.addEventListener("mousedown", mouseDown);
+
+    canvas.addEventListener("mousemove", mouseMove);
+
+    window.addEventListener("mouseup", mouseUp);
+
+    return () => {
+      canvas.removeEventListener("mousedown", mouseDown);
+      canvas.removeEventListener("mousemove", mouseMove);
+      canvas.removeEventListener("mousemove", mouseUp);
+    };
+  }, [pen, points, dots]);
 
   return <canvas id="drawCanvas" ref={canvasRef} {...rest} />;
 };
