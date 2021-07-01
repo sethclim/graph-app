@@ -1,9 +1,38 @@
+#top-grid {
+  display: "grid";
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+}
+
+.App {
+  background-color: blue;
+  height: 100vh;
+}
+
+.header {
+  background-color: green;
+  -ms-grid-row: 1;
+  grid-row: 1;
+  height: 10vh;
+}
+
+.content {
+  height: 80vh;
+  background-color: purple;
+}
+
+.footer {
+  background-color: red;
+  -ms-grid-row: 3;
+  grid-row: 3;
+  height: 10vh;
+}
+
 #graph {
   width: 480px;
   height: 320px;
   position: relative;
   border: 2px solid black;
-  background-color: blue;
 }
 
 canvas {
