@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 
 const Canvas = (props) => {
-  const { draw, onMyMouseMove, onMyMouseUp, ...rest } = props;
+  const { draw, onMyMouseMove, onMyMouseUp, width, height, ...rest } = props;
   const canvasRef = useRef(null);
 
-  function resizeCanvasToDisplaySize(canvas) {
+  function resizeCanvasToDisplaySize(h, w, canvas) {
     const { width, height } = canvas.getBoundingClientRect();
 
-    if (canvas.width !== width || canvas.height !== height) {
-      canvas.width = width;
-      canvas.height = height;
+    if (w !== width || h !== height) {
+      canvas.width = w;
+      canvas.height = h;
       return true;
     }
 
@@ -29,7 +29,7 @@ const Canvas = (props) => {
     });
 
     const render = () => {
-      resizeCanvasToDisplaySize(canvas);
+      resizeCanvasToDisplaySize(height, width, canvas);
       if (draw !== null) draw(context);
     };
     render();

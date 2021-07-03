@@ -10,7 +10,7 @@ function App() {
       <Header className="header" />
       <div className="content container">
         <MainToolbar />
-        <Graph className="graph" />
+        <Graph />
       </div>
 
       <Footer className="footer" />
