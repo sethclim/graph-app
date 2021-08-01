@@ -1,9 +1,11 @@
+import { useLayoutEffect, useRef, useState, useContext } from "react";
 import Canvas from "./canvas";
-import { useLayoutEffect, useRef, useState } from "react";
+
 //import { Point } from "../models/point";
 import DrawCanvas from "./DrawCanvas";
 
 import "../css/graph.css";
+import { InputContext } from "../providers/InputProvider";
 
 const Graph = () => {
   const [pen, setPen] = useState();
@@ -56,10 +58,12 @@ const Graph = () => {
     window.addEventListener("resize", handleResize);
   }, []);
 
+  const { penSelection } = useContext(InputContext);
+  console.log("pen selection " + penSelection);
   return (
     <div id="graph" ref={graphRef}>
       <DrawCanvas
-        pen={true}
+        pen={penSelection}
         id="draw-layer"
         width={dimensions.width}
         height={dimensions.height}
