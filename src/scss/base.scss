@@ -24,7 +24,6 @@ $error-color: red;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   width: 100%;
-  //background-color: greenyellow;
   margin-right: auto;
   margin-left: auto;
   //-left: 5em;
@@ -32,24 +31,17 @@ $error-color: red;
   // height: 100%;
 }
 
-.App {
-  background-color: blue;
-  height: 100vh;
-}
-
 .header {
-  background-color: green;
   grid-row: 1;
   height: 10vh;
 }
 
 .content {
   height: 80vh;
-  background-color: purple;
+  background-color: $background-color;
 }
 
 .footer {
-  background-color: red;
   grid-row: 3;
   height: 10vh;
 }

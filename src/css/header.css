@@ -25,44 +25,23 @@
   height: 10vh;
 }
 
-.graph-wrapper {
-  -ms-grid-column: 4;
-  -ms-grid-column-span: 8;
-  grid-column: 4/12;
+.header {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 12;
+  grid-column: 1/13;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 8vh;
+  font-size: 4.5em;
+  background-color: #243550;
+  color: white;
+  padding: 10px;
+  margin-bottom: 8px;
+  -webkit-box-shadow: 0 4px 8px 0 rgba(34, 34, 34, 0.2), 0 6px 20px 0 rgba(50, 49, 49, 0.19);
+          box-shadow: 0 4px 8px 0 rgba(34, 34, 34, 0.2), 0 6px 20px 0 rgba(50, 49, 49, 0.19);
 }
-
-#graph {
-  height: 80%;
-  width: 100%;
-  position: relative;
-  border: 1px solid blue;
-  background-color: white;
-}
-
-canvas {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-#background-layer {
-  z-index: 1;
-}
-
-#foreground-layer {
-  z-index: 2;
-}
-
-#draw-layer {
-  z-index: 3;
-}
-/*# sourceMappingURL=graph.css.map */
+/*# sourceMappingURL=header.css.map */

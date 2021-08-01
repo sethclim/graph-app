@@ -1,13 +1,16 @@
 @import "base.scss";
 
+.graph-wrapper {
+  grid-column: 4/12;
+  @include center-all;
+}
+
 #graph {
-  //width: 480px;
-  height: 100%;
+  height: 80%;
+  width: 100%;
   position: relative;
   border: 1px solid blue;
   background-color: white;
-  //@include center-all;
-  grid-column: 4/12;
 }
 
 canvas {

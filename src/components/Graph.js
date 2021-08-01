@@ -68,26 +68,30 @@ const Graph = () => {
     setRedraw,
   } = useContext(InputContext);
 
+  console.log("Dimensions " + dimensions.width + " " + dimensions.height);
+
   return (
-    <div id="graph" ref={graphRef}>
-      <DrawCanvas
-        pen={penSelection}
-        id="draw-layer"
-        width={dimensions.width}
-        height={dimensions.height}
-        dots={dots}
-        setDots={setDots}
-        points={points}
-        setPoints={setPoints}
-        redraw={redraw}
-        setRedraw={setRedraw}
-      />
-      <Canvas
-        id="background-layer"
-        draw={draw_LayerTwo}
-        width={dimensions.width}
-        height={dimensions.height}
-      />
+    <div className="graph-wrapper">
+      <div id="graph" ref={graphRef}>
+        <DrawCanvas
+          pen={penSelection}
+          id="draw-layer"
+          width={dimensions.width}
+          height={dimensions.height}
+          dots={dots}
+          setDots={setDots}
+          points={points}
+          setPoints={setPoints}
+          redraw={redraw}
+          setRedraw={setRedraw}
+        />
+        <Canvas
+          id="background-layer"
+          draw={draw_LayerTwo}
+          width={dimensions.width}
+          height={dimensions.height}
+        />
+      </div>
     </div>
   );
 };

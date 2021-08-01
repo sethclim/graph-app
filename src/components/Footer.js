@@ -1,7 +1,9 @@
+import "../css/footer.css";
+
 const Footer = () => {
   return (
     <div className="footer">
-      <p>Footer</p>
+      <p>GraphApp ~Seth Climenhaga @2021</p>
     </div>
   );
 };

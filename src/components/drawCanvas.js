@@ -64,6 +64,8 @@ const DrawCanvas = (props) => {
     context.lineWidth = 5.0;
     context.beginPath();
 
+    context.moveTo(points[0].x, points[0].y);
+
     for (var i = 1; i < points.length; i++) {
       context.lineTo(points[i].x, points[i].y);
     }

@@ -1,7 +1,9 @@
+import "../css/header.css";
+
 const Header = () => {
   return (
     <div className="header">
-      <p>Header</p>
+      <p>Graph App</p>
     </div>
   );
 };

@@ -25,10 +25,10 @@
   height: 10vh;
 }
 
-.graph-wrapper {
-  -ms-grid-column: 4;
-  -ms-grid-column-span: 8;
-  grid-column: 4/12;
+.footer {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 12;
+  grid-column: 1/13;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -38,31 +38,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 8vh;
+  font-size: 1.3em;
+  padding: 10px;
+  color: white;
+  background-color: #243550;
 }
-
-#graph {
-  height: 80%;
-  width: 100%;
-  position: relative;
-  border: 1px solid blue;
-  background-color: white;
-}
-
-canvas {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-#background-layer {
-  z-index: 1;
-}
-
-#foreground-layer {
-  z-index: 2;
-}
-
-#draw-layer {
-  z-index: 3;
-}
-/*# sourceMappingURL=graph.css.map */
+/*# sourceMappingURL=footer.css.map */
