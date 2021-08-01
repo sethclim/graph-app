@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState, useContext } from "react";
-import Canvas from "./canvas";
+import Canvas from "./Canvas";
 
 //import { Point } from "../models/point";
 import DrawCanvas from "./DrawCanvas";
@@ -8,7 +8,7 @@ import "../css/graph.css";
 import { InputContext } from "../providers/InputProvider";
 
 const Graph = () => {
-  const [pen, setPen] = useState();
+  const [setPen] = useState();
   const graphRef = useRef();
 
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -67,8 +67,6 @@ const Graph = () => {
     redraw,
     setRedraw,
   } = useContext(InputContext);
-
-  console.log("Dimensions " + dimensions.width + " " + dimensions.height);
 
   return (
     <div className="graph-wrapper">

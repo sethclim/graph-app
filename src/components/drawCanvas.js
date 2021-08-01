@@ -78,7 +78,7 @@ const DrawCanvas = (props) => {
     context.lineWidth = 5.0;
 
     if (dots.length !== 0) {
-      for (let i = 1; i < dots.length; i++) {
+      for (let i = 0; i < dots.length; i++) {
         context.fillStyle = "#ff0000";
         context.beginPath();
         context.arc(dots[i].x, dots[i].y, 5, 0, 2 * Math.PI);

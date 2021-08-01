@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const InputContext = createContext([0]);
 
 export const InputProvider = ({ children }) => {
-  const [penSelection, setPenSelection] = useState(null);
+  const [penSelection, setPenSelection] = useState(true);
   const [points, setPoints] = useState([]);
   const [dots, setDots] = useState([]);
   const [redraw, setRedraw] = useState(false);

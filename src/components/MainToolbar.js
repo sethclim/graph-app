@@ -8,14 +8,8 @@ const MainToolbar = () => {
   );
 
   function handlelear() {
-    // const newPoints = [...points];
-    // newPoints.length = 0;
-    setPoints([{ x: null, y: null }]);
-
-    // const newDots = [...dots];
-    // newDots.length = 0;
-
-    setDots([{ x: null, y: null }]);
+    setPoints([]);
+    setDots([]);
     setRedraw(true);
   }
 
