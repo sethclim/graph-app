@@ -58,8 +58,16 @@ const Graph = () => {
     window.addEventListener("resize", handleResize);
   }, []);
 
-  const { penSelection } = useContext(InputContext);
-  console.log("pen selection " + penSelection);
+  const {
+    penSelection,
+    points,
+    setPoints,
+    dots,
+    setDots,
+    redraw,
+    setRedraw,
+  } = useContext(InputContext);
+
   return (
     <div id="graph" ref={graphRef}>
       <DrawCanvas
@@ -67,6 +75,12 @@ const Graph = () => {
         id="draw-layer"
         width={dimensions.width}
         height={dimensions.height}
+        dots={dots}
+        setDots={setDots}
+        points={points}
+        setPoints={setPoints}
+        redraw={redraw}
+        setRedraw={setRedraw}
       />
       <Canvas
         id="background-layer"

@@ -1,10 +1,19 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 
 const DrawCanvas = (props) => {
-  const { pen, width, height, ...rest } = props;
+  const {
+    pen,
+    width,
+    height,
+    points,
+    setPoints,
+    dots,
+    setDots,
+    redraw,
+    setRedraw,
+    ...rest
+  } = props;
   const canvasRef = useRef(null);
-  const [points, setPoints] = useState([]);
-  const [dots, setDots] = useState([]);
 
   const resizeCanvasToDisplaySize = useCallback(
     (h, w, canvas) => {
@@ -33,11 +42,10 @@ const DrawCanvas = (props) => {
 
       return false;
     },
-    [dots, points]
+    [dots, points, setDots, setPoints]
   );
 
   function scaleDrawingOnResize(data, oldDimensions, newDimensions) {
-    //console.log("oldData " + JSON.stringify(data));
     const scalerX = newDimensions.width / oldDimensions.width;
     const scalerY = newDimensions.height / oldDimensions.height;
 
@@ -46,7 +54,7 @@ const DrawCanvas = (props) => {
     for (let i = 0; i < data.length; i++) {
       newData.push({ x: data[i].x * scalerX, y: data[i].y * scalerY });
     }
-    //console.log("newData " + JSON.stringify(newData));
+
     return newData;
   }
 
@@ -55,7 +63,6 @@ const DrawCanvas = (props) => {
     context.lineCap = "round";
     context.lineWidth = 5.0;
     context.beginPath();
-    context.moveTo(points[0].x, points[0].y);
 
     for (var i = 1; i < points.length; i++) {
       context.lineTo(points[i].x, points[i].y);
@@ -84,15 +91,18 @@ const DrawCanvas = (props) => {
 
     var isDrawing;
 
-    const redrawn = resizeCanvasToDisplaySize(height, width, canvas);
+    const resizeExe = resizeCanvasToDisplaySize(height, width, canvas);
 
-    if (redrawn) {
+    setRedraw(resizeExe);
+
+    if (redraw) {
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
       executeDraw();
     }
 
     function mouseDown(e) {
       isDrawing = true;
-      points.length = 0;
+
       if (pen === true) {
         points.push({ x: e.clientX, y: e.clientY });
       }
@@ -114,12 +124,11 @@ const DrawCanvas = (props) => {
       executeDraw();
     }
 
-    function mouseUp(e) {
+    function mouseUp() {
       isDrawing = false;
     }
 
     function executeDraw() {
-      //console.log("points " + JSON.stringify(points));
       if (points !== undefined && points.length > 0) drawLine(context, points);
 
       if (dots !== undefined && dots.length > 0) drawDot(context, dots);
@@ -136,7 +145,16 @@ const DrawCanvas = (props) => {
       canvas.removeEventListener("mousemove", mouseMove);
       canvas.removeEventListener("mousemove", mouseUp);
     };
-  }, [pen, points, dots, height, width, resizeCanvasToDisplaySize]);
+  }, [
+    pen,
+    points,
+    dots,
+    height,
+    width,
+    resizeCanvasToDisplaySize,
+    redraw,
+    setRedraw,
+  ]);
 
   return <canvas id="drawCanvas" ref={canvasRef} {...rest} />;
 };
