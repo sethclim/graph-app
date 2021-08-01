@@ -88,7 +88,7 @@ const DrawCanvas = (props) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-
+    const { left, top } = canvas.getBoundingClientRect();
     var isDrawing;
 
     const resizeExe = resizeCanvasToDisplaySize(height, width, canvas);
@@ -103,11 +103,15 @@ const DrawCanvas = (props) => {
     function mouseDown(e) {
       isDrawing = true;
 
+      const currentX = e.clientX - left;
+
+      const currentY = e.clientY - top;
+
       if (pen === true) {
-        points.push({ x: e.clientX, y: e.clientY });
+        points.push({ x: currentX, y: currentY });
       }
       if (pen === false) {
-        dots.push({ x: e.clientX, y: e.clientY });
+        dots.push({ x: currentX, y: currentY });
       }
 
       executeDraw();
@@ -116,9 +120,13 @@ const DrawCanvas = (props) => {
     function mouseMove(e) {
       if (!isDrawing) return;
 
+      const currentX = e.clientX - left;
+
+      const currentY = e.clientY - top;
+
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
       if (pen) {
-        points.push({ x: e.clientX, y: e.clientY });
+        points.push({ x: currentX, y: currentY });
       }
 
       executeDraw();
