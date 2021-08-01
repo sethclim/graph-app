@@ -33,7 +33,7 @@ const Canvas = (props) => {
       if (draw !== null) draw(context);
     };
     render();
-  }, [draw, onMyMouseMove, onMyMouseUp]);
+  }, [draw, onMyMouseMove, onMyMouseUp, height, width]);
 
   return <canvas id="canvas" ref={canvasRef} {...rest} />;
 };

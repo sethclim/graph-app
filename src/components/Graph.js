@@ -1,7 +1,7 @@
 import Canvas from "./canvas";
 import { useLayoutEffect, useRef, useState } from "react";
 //import { Point } from "../models/point";
-import DrawCanvas from "./drawCanvas";
+import DrawCanvas from "./DrawCanvas";
 
 import "../css/graph.css";
 
@@ -15,7 +15,7 @@ const Graph = () => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.beginPath();
     ctx.lineWidth = "3";
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "blue";
 
     let xGridLines = 10;
     let yGridLines = 10;
@@ -52,13 +52,14 @@ const Graph = () => {
         });
       }
     }
+    handleResize();
     window.addEventListener("resize", handleResize);
   }, []);
 
   return (
     <div id="graph" ref={graphRef}>
       <DrawCanvas
-        pen={pen}
+        pen={true}
         id="draw-layer"
         width={dimensions.width}
         height={dimensions.height}

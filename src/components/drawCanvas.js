@@ -1,20 +1,53 @@
-import { useEffect, useRef, useMemo, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 const DrawCanvas = (props) => {
-  const { pen, ...rest } = props;
+  const { pen, width, height, ...rest } = props;
   const canvasRef = useRef(null);
   const [points, setPoints] = useState([]);
   const [dots, setDots] = useState([]);
 
-  function resizeCanvasToDisplaySize(canvas) {
-    const { width, height } = canvas.getBoundingClientRect();
+  const resizeCanvasToDisplaySize = useCallback(
+    (h, w, canvas) => {
+      const { width, height } = canvas.getBoundingClientRect();
 
-    if (canvas.width !== width || canvas.height !== height) {
-      canvas.width = width;
-      canvas.height = height;
-      return true;
+      if (w !== width || h !== height) {
+        canvas.width = w;
+        canvas.height = h;
+
+        const newPoints = scaleDrawingOnResize(
+          points,
+          { width: width, height: height },
+          { width: w, height: h }
+        );
+        const newDots = scaleDrawingOnResize(
+          dots,
+          { width: width, height: height },
+          { width: w, height: h }
+        );
+
+        setPoints(newPoints);
+        setDots(newDots);
+
+        return true;
+      }
+
+      return false;
+    },
+    [dots, points]
+  );
+
+  function scaleDrawingOnResize(data, oldDimensions, newDimensions) {
+    //console.log("oldData " + JSON.stringify(data));
+    const scalerX = newDimensions.width / oldDimensions.width;
+    const scalerY = newDimensions.height / oldDimensions.height;
+
+    const newData = [];
+
+    for (let i = 0; i < data.length; i++) {
+      newData.push({ x: data[i].x * scalerX, y: data[i].y * scalerY });
     }
-    return false;
+    //console.log("newData " + JSON.stringify(newData));
+    return newData;
   }
 
   function drawLine(context, points) {
@@ -51,10 +84,15 @@ const DrawCanvas = (props) => {
 
     var isDrawing;
 
-    resizeCanvasToDisplaySize(canvas);
+    const redrawn = resizeCanvasToDisplaySize(height, width, canvas);
+
+    if (redrawn) {
+      executeDraw();
+    }
 
     function mouseDown(e) {
       isDrawing = true;
+      points.length = 0;
       if (pen === true) {
         points.push({ x: e.clientX, y: e.clientY });
       }
@@ -81,6 +119,7 @@ const DrawCanvas = (props) => {
     }
 
     function executeDraw() {
+      //console.log("points " + JSON.stringify(points));
       if (points !== undefined && points.length > 0) drawLine(context, points);
 
       if (dots !== undefined && dots.length > 0) drawDot(context, dots);
@@ -97,7 +136,7 @@ const DrawCanvas = (props) => {
       canvas.removeEventListener("mousemove", mouseMove);
       canvas.removeEventListener("mousemove", mouseUp);
     };
-  }, [pen, points, dots]);
+  }, [pen, points, dots, height, width, resizeCanvasToDisplaySize]);
 
   return <canvas id="drawCanvas" ref={canvasRef} {...rest} />;
 };
