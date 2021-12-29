@@ -45,36 +45,46 @@ const Graph = () => {
     ctx.lineWidth = "5";
     ctx.strokeStyle = "blue";
 
+    let xR = {...xRange}
+    xR.step = 1
+
+    let yR = {...yRange}
+    yR.step = 1
+
+    let xNum = GraphHelper.getNumLines(xR)
+    let yNum = GraphHelper.getNumLines(yR)
+
+    let spacX = ctx.canvas.width / xNum;
+    let spacY = ctx.canvas.height / yNum;
+
+    //let origin = GraphHelper.getOrigin(xRange, yRange)
+
+    let originLoc = GraphHelper.getOriginLocation(xR, yR)
+
+    //X Axis
+    ctx.moveTo(0, spacY * originLoc.y);
+    ctx.lineTo(ctx.canvas.width, spacY * originLoc.y);
+
+    //Y Axis
+    ctx.moveTo(spacX * originLoc.x, 0);
+    ctx.lineTo(spacX * originLoc.x, ctx.canvas.height);
+
+    ctx.font = "20px Arial";
+
     let xNumber = GraphHelper.getNumLines(xRange)
     let yNumber = GraphHelper.getNumLines(yRange)
 
     let spacingX = ctx.canvas.width / xNumber;
     let spacingY = ctx.canvas.height / yNumber;
 
-    //let origin = GraphHelper.getOrigin(xRange, yRange)
-
-    let originLoc = GraphHelper.getOriginLocation(xRange, yRange)
-
-
-    //X Axis
-    ctx.moveTo(0, spacingY * originLoc.x);
-    ctx.lineTo(ctx.canvas.width, spacingY * originLoc.x);
-
-    //Y Axis
-    ctx.moveTo(spacingX * originLoc.x, 0);
-    ctx.lineTo(spacingX * originLoc.x, ctx.canvas.height);
-
-
-    ctx.font = "20px Arial";
-
     for(let i = 0; i < xNumber; i++){
       const xNum = parseInt(xRange.min) + (xRange.step * i)
-      ctx.fillText(xNum, (spacingX * i) + 5, spacingY * originLoc.y + 20);
+      ctx.fillText(xNum, (spacingX * i) + 5, spacY * originLoc.y + 20);
     }
 
     for(let i = 0; i < yNumber; i++){
-      const yNum = parseInt(yRange.min) + (yRange.step * i)
-      ctx.fillText(yNum, spacingX * originLoc.x + 5, (spacingY * i) + 20);
+      const yNum = parseInt(yRange.max) - (yRange.step * i)
+      ctx.fillText(yNum, spacX * originLoc.x + 5, (spacingY * i) + 20);
     }
 
     ctx.stroke();

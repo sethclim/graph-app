@@ -1,12 +1,10 @@
-import { Point } from "./point";
+import { Point } from "./Point";
 import { Range } from "./Range";
 
 export class GraphHelper{
 
     static getOrigin = (xRange : Range, yRange : Range) =>{
         let origin = new Point(0,0)
-
-        console.log("xRange " + JSON.stringify(xRange) + "yRange " + JSON.stringify(yRange))
 
         if(xRange.min > 0 )
         {

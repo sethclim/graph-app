@@ -14,7 +14,6 @@ const GraphControls = () => {
   const [yMax, setYMax] = useState(-5)
   const [yStep, setYStep] = useState(1)
 
-
   const handleXMinChange = (num) =>{
     let number = parseInt(num)
     if(!isNaN(number) && checkMinMax(num, xMax))
@@ -118,20 +117,20 @@ const GraphControls = () => {
         <h3>Set Scale</h3>
         <div className="control-row">
             <label>X Range</label>
-            <input type="text"   onChange={(event) => handleXMinChange(event.target.value) } />
+            <input type="text" placeholder={xMin} onChange={(event) => handleXMinChange(event.target.value) } />
             <p> - </p>
-            <input  onChange={(event) => handleXMaxChange(event.target.value)} />
+            <input type="text" placeholder={xMax} onChange={(event) => handleXMaxChange(event.target.value)} />
             <label>Step</label>
-            <input   onChange={(event) => handleXStepChange(event.target.value)} />
+            <input type="text" placeholder={xStep} onChange={(event) => handleXStepChange(event.target.value)} />
         </div>
 
         <div className="control-row">
             <label>Y Range</label>
-            <input   onChange={(event) => handleYMinChange(event.target.value)} />
+            <input type="text" placeholder ={yMin} onChange={(event) => handleYMinChange(event.target.value)} />
             <p> - </p>
-            <input   onChange={(event) => handleYMaxChange(event.target.value)} />
+            <input type="text" placeholder ={yMax} onChange={(event) => handleYMaxChange(event.target.value)} />
             <label>Step</label>
-            <input v  onChange={(event) => handleYStepChange(event.target.value)} />
+            <input type="text" placeholder ={yStep} onChange={(event) => handleYStepChange(event.target.value)} />
         </div>
     </div>
   );
