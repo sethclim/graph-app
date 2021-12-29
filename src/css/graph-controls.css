@@ -25,44 +25,19 @@
   height: 10vh;
 }
 
-.graph-wrapper {
-  -ms-grid-column: 4;
-  -ms-grid-column-span: 7;
-  grid-column: 4/11;
+#graph-controls {
+  -ms-grid-column: 12;
+  -ms-grid-column-span: 1;
+  grid-column: 12/13;
+  background-color: aqua;
+}
+
+.control-row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
-
-#graph {
-  height: 80%;
-  width: 100%;
-  position: relative;
-  border: 1px solid blue;
-  background-color: white;
-}
-
-canvas {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-#background-layer {
-  z-index: 1;
-}
-
-#foreground-layer {
-  z-index: 2;
-}
-
-#draw-layer {
-  z-index: 3;
-}
-/*# sourceMappingURL=graph.css.map */
+/*# sourceMappingURL=graph-controls.css.map */

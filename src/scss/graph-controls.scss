@@ -1,0 +1,10 @@
+@import "base.scss";
+
+#graph-controls {
+  grid-column: 12/13;
+  background-color: aqua;
+}
+
+.control-row {
+  @include center-v;
+}
