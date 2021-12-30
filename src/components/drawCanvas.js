@@ -1,51 +1,54 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
-const DrawCanvas = (props) => {
-  const {
-    pen,
-    width,
-    height,
-    points,
-    setPoints,
-    dots,
-    setDots,
-    redraw,
-    setRedraw,
-    ...rest
-  } = props;
+const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redraw, setRedraw,...rest}) => {
+
   const canvasRef = useRef(null);
+  const dotsRef = useRef(dots)
+  const pointsRef = useRef(points)
 
-  const resizeCanvasToDisplaySize = useCallback(
-    (h, w, canvas) => {
-      const { width, height } = canvas.getBoundingClientRect();
+  const [isDrawing, setIsDrawing] = useState(false)
+  
+  useEffect(()=>{
+    dotsRef.current = dots
+  },[dots])
 
-      if (w !== width || h !== height) {
-        canvas.width = w;
-        canvas.height = h;
+  useEffect(()=>{
+    pointsRef.current = points
+  },[points])
 
-        const newPoints = scaleDrawingOnResize(
-          points,
-          { width: width, height: height },
-          { width: w, height: h }
-        );
-        const newDots = scaleDrawingOnResize(
-          dots,
-          { width: width, height: height },
-          { width: w, height: h }
-        );
+  const resizeCanvasToDisplaySize = useCallback((newWidth, newHeight, canvas) =>{
+      const oldWidth = canvas.getBoundingClientRect().width;
+      const oldHeight = canvas.getBoundingClientRect().height;
 
-        setPoints(newPoints);
-        setDots(newDots);
+      if (newWidth !== oldWidth || newHeight !== oldHeight) {
+        canvas.width = width;
+        canvas.height = height;
 
-        return true;
+        let oldDim = {width: oldWidth, height: oldHeight }
+        let newDim = {width: newWidth, height: newHeight }
+
+        const newPoints = [] 
+
+        for(let i = 0; i < pointsRef.current.length; i++)
+        {
+          let subArr = pointsRef.current[i]
+          let newSubArr = scaleDrawingOnResize(subArr, oldDim, newDim)
+
+          newPoints.push(newSubArr)
+        }
+      
+        const newDots = scaleDrawingOnResize(dotsRef.current, oldDim, newDim);
+
+        setPoints(newPoints)
+        setDots(newDots)
+
+        return true
       }
+      return false
+    }, [setDots,setPoints, width, height]
+  )
 
-      return false;
-    },
-    [dots, points, setDots, setPoints]
-  );
-
-  function scaleDrawingOnResize(data, oldDimensions, newDimensions) {
+  const scaleDrawingOnResize = (data, oldDimensions, newDimensions) => {
     const scalerX = newDimensions.width / oldDimensions.width;
     const scalerY = newDimensions.height / oldDimensions.height;
 
@@ -58,21 +61,22 @@ const DrawCanvas = (props) => {
     return newData;
   }
 
-  function drawLine(context, points) {
+  function reDrawLine(context, points) {
     context.strokeStyle = "#ff0000";
     context.lineCap = "round";
     context.lineWidth = 5.0;
     context.beginPath();
 
-    context.moveTo(points[0].x, points[0].y);
-
-    for (var i = 1; i < points.length; i++) {
-      context.lineTo(points[i].x, points[i].y);
+    for (var i = 0; i < points.length; i++) {
+      context.moveTo(points[i][0].x, points[i][0].y);
+      for (var j = 1; j < points[i].length; j++) {
+        context.lineTo(points[i][j].x, points[i][j].y);
+      }
     }
     context.stroke();
   }
 
-  function drawDot(context, dots) {
+  function reDrawDot(context, dots) {
     context.strokeStyle = "#ff0000";
     context.lineCap = "round";
     context.lineWidth = 5.0;
@@ -87,84 +91,139 @@ const DrawCanvas = (props) => {
     }
   }
 
+  const reDrawAll = useCallback(()=>{
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height)
+
+      if (dotsRef.current !== undefined && dotsRef.current.length > 0){
+         reDrawDot(context, dotsRef.current);
+      }
+  
+      if (pointsRef.current !== undefined && pointsRef.current.length > 0) {
+        reDrawLine(context, pointsRef.current);
+      }
+    },[]
+  )
+  
+  useEffect(() =>{
+    const canvas = canvasRef.current;
+    resizeCanvasToDisplaySize(width, height, canvas);
+    
+    reDrawAll()
+
+  },[width, height, setRedraw, resizeCanvasToDisplaySize, reDrawAll])
+
+  useEffect(()=>{
+    if (redraw) {
+      reDrawAll()
+    }
+  },[redraw, reDrawAll])
+
+  //===================================================================
+  const drawDot = (ctx,x,y) =>{
+    ctx.strokeStyle = "#ff0000";
+    ctx.lineCap = "round";
+    ctx.lineWidth = 5.0;
+    ctx.fillStyle = "#ff0000";
+
+    ctx.beginPath();
+    ctx.arc(x,y, 5, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  const startLine = (ctx, x ,y) =>{
+    ctx.strokeStyle = "#ff0000";
+    ctx.lineCap = "round";
+    ctx.lineWidth = 5.0;
+    ctx.moveTo(x,y);
+    ctx.beginPath();
+  }
+
+  const drawLine = (ctx, x ,y) =>{
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
+  //===================================================================
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const { left, top } = canvas.getBoundingClientRect();
-    var isDrawing;
-
-    const resizeExe = resizeCanvasToDisplaySize(height, width, canvas);
-
-    setRedraw(resizeExe);
-
-    if (redraw) {
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      executeDraw();
-    }
 
     function mouseDown(e) {
-      isDrawing = true;
-
       const currentX = e.clientX - left;
-
       const currentY = e.clientY - top;
 
       if (pen === true) {
-        points.push({ x: currentX, y: currentY });
+
+        let p = [...points]
+        p.push([{ x: currentX, y: currentY }])
+
+        setPoints(p)
+
+        startLine(context,currentX,currentY)
+        setIsDrawing(true)
       }
+
       if (pen === false) {
-        dots.push({ x: currentX, y: currentY });
+
+        let d = [...dots]
+        d.push({ x: currentX, y: currentY });
+
+        setDots(d)
+
+        drawDot(context, currentX,currentY)
       }
-
-      executeDraw();
-    }
-
-    function mouseMove(e) {
-      if (!isDrawing) return;
-
-      const currentX = e.clientX - left;
-
-      const currentY = e.clientY - top;
-
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-      if (pen) {
-        points.push({ x: currentX, y: currentY });
-      }
-
-      executeDraw();
-    }
-
-    function mouseUp() {
-      isDrawing = false;
-    }
-
-    function executeDraw() {
-      if (points !== undefined && points.length > 0) drawLine(context, points);
-
-      if (dots !== undefined && dots.length > 0) drawDot(context, dots);
     }
 
     canvas.addEventListener("mousedown", mouseDown);
 
-    canvas.addEventListener("mousemove", mouseMove);
+    return () => {
+      canvas.removeEventListener("mousedown", mouseDown);
+    };
+  }, [pen, dots, points, setPoints, setDots]);
+
+  useEffect(()=>{
+    const canvas = canvasRef.current;
+
+    function mouseUp() {
+      setIsDrawing(false)
+    }
 
     window.addEventListener("mouseup", mouseUp);
 
     return () => {
-      canvas.removeEventListener("mousedown", mouseDown);
-      canvas.removeEventListener("mousemove", mouseMove);
       canvas.removeEventListener("mousemove", mouseUp);
     };
-  }, [
-    pen,
-    points,
-    dots,
-    height,
-    width,
-    resizeCanvasToDisplaySize,
-    redraw,
-    setRedraw,
-  ]);
+  },[])
+
+
+  useEffect(()=>{
+    if (!isDrawing){ return }
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    const { left, top } = canvas.getBoundingClientRect();
+
+    function mouseMove(e) {
+
+      const currentX = e.clientX - left;
+      const currentY = e.clientY - top;
+
+      let p = [...points]
+      p[p.length - 1].push({ x: currentX, y: currentY })
+
+      setPoints(p)
+      drawLine(context, currentX, currentY)
+    }
+
+    canvas.addEventListener("mousemove", mouseMove);
+
+    return () => {
+      canvas.removeEventListener("mousemove", mouseMove);
+    };
+  },[isDrawing, points, setPoints])
 
   return <canvas id="drawCanvas" ref={canvasRef} {...rest} />;
 };

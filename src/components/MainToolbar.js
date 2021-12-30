@@ -7,7 +7,7 @@ const MainToolbar = () => {
     InputContext
   );
 
-  function handlelear() {
+  function handleClear() {
     setPoints([]);
     setDots([]);
     setRedraw(true);
@@ -22,7 +22,7 @@ const MainToolbar = () => {
         Dot
       </button>
       <button className="toolbtn">Eraser</button>
-      <button className="toolbtn" onClick={() => handlelear()}>
+      <button className="toolbtn" onClick={() => handleClear()}>
         Clear
       </button>
     </div>

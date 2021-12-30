@@ -10,7 +10,6 @@ import { InputContext } from "../providers/InputProvider";
 import { GraphContext } from "../providers/GraphProvider";
 
 const Graph = () => {
-  //const [setPen] = useState();
   const graphRef = useRef();
 
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -56,8 +55,6 @@ const Graph = () => {
 
     let spacX = ctx.canvas.width / xNum;
     let spacY = ctx.canvas.height / yNum;
-
-    //let origin = GraphHelper.getOrigin(xRange, yRange)
 
     let originLoc = GraphHelper.getOriginLocation(xR, yR)
 
