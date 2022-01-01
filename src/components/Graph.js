@@ -110,6 +110,8 @@ const Graph = () => {
     penSelection,
     points,
     setPoints,
+    linePoints,
+    setLinePoints,
     dots,
     setDots,
     redraw,
@@ -128,6 +130,8 @@ const Graph = () => {
           setDots={setDots}
           points={points}
           setPoints={setPoints}
+          linePoints={linePoints}
+          setLinePoints={setLinePoints}
           redraw={redraw}
           setRedraw={setRedraw}
         />

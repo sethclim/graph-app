@@ -1,12 +1,16 @@
 import { useEffect, useRef, useCallback, useState } from "react";
+import { PenOptions } from "../models/PenOptions";
 
-const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redraw, setRedraw,...rest}) => {
+const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLinePoints, dots, setDots, redraw, setRedraw,...rest}) => {
 
   const canvasRef = useRef(null);
   const dotsRef = useRef(dots)
   const pointsRef = useRef(points)
+  const linePointsRef = useRef(linePoints)
 
   const [isDrawing, setIsDrawing] = useState(false)
+  const [lineStarted, setLineStarted] = useState(false)
+  const [tempStart, setTempStart] = useState(null)
   
   useEffect(()=>{
     dotsRef.current = dots
@@ -15,6 +19,10 @@ const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redra
   useEffect(()=>{
     pointsRef.current = points
   },[points])
+
+  useEffect(()=>{
+    linePointsRef.current = linePoints
+  },[linePoints])
 
   const resizeCanvasToDisplaySize = useCallback((newWidth, newHeight, canvas) =>{
       const oldWidth = canvas.getBoundingClientRect().width;
@@ -104,6 +112,11 @@ const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redra
       if (pointsRef.current !== undefined && pointsRef.current.length > 0) {
         reDrawLine(context, pointsRef.current);
       }
+
+      if (linePointsRef.current !== undefined && linePointsRef.current.length > 0) {
+        console.log("Lines Points Ref: " + JSON.stringify(linePointsRef.current))
+        reDrawLine(context, linePointsRef.current);
+      }
     },[]
   )
   
@@ -119,7 +132,8 @@ const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redra
     if (redraw) {
       reDrawAll()
     }
-  },[redraw, reDrawAll])
+    setRedraw(false)
+  },[redraw, reDrawAll,setRedraw])
 
   //===================================================================
   const drawDot = (ctx,x,y) =>{
@@ -137,14 +151,24 @@ const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redra
     ctx.strokeStyle = "#ff0000";
     ctx.lineCap = "round";
     ctx.lineWidth = 5.0;
-    ctx.moveTo(x,y);
     ctx.beginPath();
+    ctx.moveTo(x,y);
   }
 
   const drawLine = (ctx, x ,y) =>{
     ctx.lineTo(x, y);
     ctx.stroke();
   }
+
+  const drawTempLine = (ctx, x1 ,y1, x2, y2) =>{
+    ctx.strokeStyle = "#808080";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+
   //===================================================================
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -155,25 +179,58 @@ const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redra
       const currentX = e.clientX - left;
       const currentY = e.clientY - top;
 
-      if (pen === true) {
+      switch(pen) {
+        case PenOptions.pen:
+          reDrawAll()
+          d_pen()
+          break;
+        case PenOptions.line:
+          d_line(context, currentX, currentY)
+          break;
+        case PenOptions.dot:
+          reDrawAll()
+          d_dot()
+          break;
+        default:
+          d_pen()
+      }
 
+      function d_pen(){
         let p = [...points]
         p.push([{ x: currentX, y: currentY }])
-
         setPoints(p)
-
         startLine(context,currentX,currentY)
         setIsDrawing(true)
       }
 
-      if (pen === false) {
-
+      function d_dot(){
         let d = [...dots]
         d.push({ x: currentX, y: currentY });
-
         setDots(d)
-
         drawDot(context, currentX,currentY)
+      }
+
+      function d_line(ctx, x, y){
+        let lp = [...linePoints]
+        
+
+        if(!lineStarted)
+        {
+          lp.push([{ x: x, y: y }]);
+          setLinePoints(lp)
+          setLineStarted(true);
+          startLine(ctx, x,y)
+          setTempStart({x: x, y: y})
+        }
+        else
+        {
+          lp[lp.length - 1].push({ x: x, y: y });
+          setLinePoints(lp)
+          drawLine(ctx, x,y)
+          setLineStarted(false)
+          setTempStart(null)
+          reDrawAll();
+        }      
       }
     }
 
@@ -182,7 +239,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redra
     return () => {
       canvas.removeEventListener("mousedown", mouseDown);
     };
-  }, [pen, dots, points, setPoints, setDots]);
+  }, [pen, dots, points,linePoints, setPoints, setDots, setLinePoints, lineStarted, reDrawAll]);
 
   useEffect(()=>{
     const canvas = canvasRef.current;
@@ -197,6 +254,35 @@ const DrawCanvas = ({pen, width, height, points, setPoints, dots, setDots, redra
       canvas.removeEventListener("mousemove", mouseUp);
     };
   },[])
+
+
+  useEffect(()=>{
+
+    if(pen !== PenOptions.line){return}
+
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    const { left, top } = canvas.getBoundingClientRect();
+
+    function mouseMove(e) {
+      const currentX = e.clientX - left;
+      const currentY = e.clientY - top;
+      //setTempEndPoint({ x: currentX, y: currentY })
+      if(tempStart !== null){
+        console.log("Temp start " + JSON.stringify(tempStart))
+        reDrawAll()
+        drawTempLine(context, tempStart.x, tempStart.y, currentX, currentY)
+      }
+     
+    }
+
+    canvas.addEventListener("mousemove", mouseMove);
+
+    return () => {
+      canvas.removeEventListener("mousemove", mouseMove);
+    };
+  },[pen, tempStart, reDrawAll])
+
 
 
   useEffect(()=>{
