@@ -2,9 +2,10 @@ import { useContext } from "react";
 import "../css/maintoolbar.css";
 import { PenOptions } from "../models/PenOptions";
 import { InputContext } from "../providers/InputProvider";
+import { TwitterPicker } from "react-color";
 
 const MainToolbar = () => {
-  const { setPenSelection,setDots,setLinePoints, setRedraw,setPoints } = useContext(
+  const { setPenSelection,setDots,setLinePoints, setRedraw,setPoints, color, setColor } = useContext(
     InputContext
   );
 
@@ -14,6 +15,11 @@ const MainToolbar = () => {
     setDots([]);
     setRedraw(true);
   }
+
+  const handleChangeComplete = (color, event) => {
+    console.log("This is color " + color)
+    setColor(color)
+  };
 
   return (
     <div id="main-toolbar">
@@ -30,6 +36,11 @@ const MainToolbar = () => {
       <button className="toolbtn" onClick={() => handleClear()}>
         Clear
       </button>
+      <div className="my-color-pickers">
+        <TwitterPicker  color={ color } width={200}
+          onChangeComplete={(color) => handleChangeComplete(color.hex)}/>
+      </div>
+      
     </div>
   );
 };

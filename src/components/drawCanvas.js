@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import { PenOptions } from "../models/PenOptions";
 
-const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLinePoints, dots, setDots, redraw, setRedraw,...rest}) => {
+const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLinePoints, dots, setDots, redraw, setRedraw,color,...rest}) => {
 
   const canvasRef = useRef(null);
   const dotsRef = useRef(dots)
@@ -69,35 +69,37 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     return newData;
   }
 
-  function reDrawLine(context, points) {
-    context.strokeStyle = "#ff0000";
-    context.lineCap = "round";
-    context.lineWidth = 5.0;
-    context.beginPath();
+  const reDrawLine = useCallback((context, points) => {
+      context.strokeStyle = color;
+      context.lineCap = "round";
+      context.lineWidth = 5.0;
+      context.beginPath();
 
-    for (var i = 0; i < points.length; i++) {
-      context.moveTo(points[i][0].x, points[i][0].y);
-      for (var j = 1; j < points[i].length; j++) {
-        context.lineTo(points[i][j].x, points[i][j].y);
+      for (var i = 0; i < points.length; i++) {
+        context.moveTo(points[i][0].x, points[i][0].y);
+        for (var j = 1; j < points[i].length; j++) {
+          context.lineTo(points[i][j].x, points[i][j].y);
+        }
       }
-    }
-    context.stroke();
-  }
+      context.stroke();
+    },[color]
+  )
 
-  function reDrawDot(context, dots) {
-    context.strokeStyle = "#ff0000";
-    context.lineCap = "round";
-    context.lineWidth = 5.0;
+  const reDrawDot = useCallback((context, dots) => {
+      context.strokeStyle = color;
+      context.lineCap = "round";
+      context.lineWidth = 5.0;
 
-    if (dots.length !== 0) {
-      for (let i = 0; i < dots.length; i++) {
-        context.fillStyle = "#ff0000";
-        context.beginPath();
-        context.arc(dots[i].x, dots[i].y, 5, 0, 2 * Math.PI);
-        context.fill();
+      if (dots.length !== 0) {
+        for (let i = 0; i < dots.length; i++) {
+          context.fillStyle = color;
+          context.beginPath();
+          context.arc(dots[i].x, dots[i].y, 5, 0, 2 * Math.PI);
+          context.fill();
+        }
       }
-    }
-  }
+    },[color]
+  )
 
   const reDrawAll = useCallback(()=>{
       const canvas = canvasRef.current;
@@ -114,10 +116,9 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
       }
 
       if (linePointsRef.current !== undefined && linePointsRef.current.length > 0) {
-        console.log("Lines Points Ref: " + JSON.stringify(linePointsRef.current))
         reDrawLine(context, linePointsRef.current);
       }
-    },[]
+    },[reDrawDot, reDrawLine]
   )
   
   useEffect(() =>{
@@ -136,24 +137,27 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
   },[redraw, reDrawAll,setRedraw])
 
   //===================================================================
-  const drawDot = (ctx,x,y) =>{
-    ctx.strokeStyle = "#ff0000";
-    ctx.lineCap = "round";
-    ctx.lineWidth = 5.0;
-    ctx.fillStyle = "#ff0000";
+  const drawDot = useCallback( (ctx,x,y) =>{
+      ctx.strokeStyle = color;
+      ctx.lineCap = "round";
+      ctx.lineWidth = 5.0;
+      ctx.fillStyle = color;
 
-    ctx.beginPath();
-    ctx.arc(x,y, 5, 0, 2 * Math.PI);
-    ctx.fill();
-  }
+      ctx.beginPath();
+      ctx.arc(x,y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+    },[color]
+  )
 
-  const startLine = (ctx, x ,y) =>{
-    ctx.strokeStyle = "#ff0000";
-    ctx.lineCap = "round";
-    ctx.lineWidth = 5.0;
-    ctx.beginPath();
-    ctx.moveTo(x,y);
-  }
+  const startLine = useCallback( (ctx, x ,y) =>{
+    console.log("Color " + color)
+      ctx.strokeStyle = color;
+      ctx.lineCap = "round";
+      ctx.lineWidth = 5.0;
+      ctx.beginPath();
+      ctx.moveTo(x,y);
+    },[color]
+  )
 
   const drawLine = (ctx, x ,y) =>{
     ctx.lineTo(x, y);
@@ -239,7 +243,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     return () => {
       canvas.removeEventListener("mousedown", mouseDown);
     };
-  }, [pen, dots, points,linePoints, setPoints, setDots, setLinePoints, lineStarted, reDrawAll]);
+  }, [pen, dots, points,linePoints, setPoints, setDots, setLinePoints, lineStarted, reDrawAll, drawDot, startLine]);
 
   useEffect(()=>{
     const canvas = canvasRef.current;

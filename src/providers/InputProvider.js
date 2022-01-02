@@ -9,6 +9,7 @@ export const InputProvider = ({ children }) => {
   const [linePoints, setLinePoints] = useState([]);
   const [dots, setDots] = useState([]);
   const [redraw, setRedraw] = useState(false);
+  const [color, setColor] = useState("#EB144C");
 
   return (
     <InputContext.Provider
@@ -23,6 +24,8 @@ export const InputProvider = ({ children }) => {
         setDots,
         redraw,
         setRedraw,
+        color,
+        setColor
       }}
     >
       {children}

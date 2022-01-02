@@ -17,6 +17,12 @@
 }
 
 .toolbtn:hover {
-  //outline: solid 2px #e74c3c;
   background-color: #e74c3c;
+}
+
+.my-color-pickers {
+  width: 100%;
+  margin-top: 2em;
+  @include center-h;
+  position: relative;
 }

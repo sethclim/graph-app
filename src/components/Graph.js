@@ -116,6 +116,7 @@ const Graph = () => {
     setDots,
     redraw,
     setRedraw,
+    color
   } = useContext(InputContext);
 
   return (
@@ -134,6 +135,7 @@ const Graph = () => {
           setLinePoints={setLinePoints}
           redraw={redraw}
           setRedraw={setRedraw}
+          color={color}
         />
         <Canvas
           id="background-layer"
