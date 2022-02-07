@@ -7,8 +7,21 @@ import MainToolbar from "./components/MainToolbar";
 import { InputProvider } from "./providers/InputProvider";
 import { GraphProvider } from "./providers/GraphProvider";
 import GraphControls from "./components/GraphControls";
+import CogButton from "./components/CogButton";
+import { useState } from "react";
 
 function App() {
+
+
+  const [controls, setControls] = useState(false);
+
+  
+
+  function test (){
+    setControls(!controls);
+     console.log("controls " + controls) 
+  }
+
   return (
     <InputProvider>
       <div className="App" id="top-grid">
@@ -17,7 +30,12 @@ function App() {
           <GraphProvider>
             <MainToolbar />
             <Graph />
-            <GraphControls />
+            <CogButton onClick={test}  />
+
+            {
+              controls?   <GraphControls /> : null
+            }
+          
           </GraphProvider>
         </div>
         <Footer className="footer" />
