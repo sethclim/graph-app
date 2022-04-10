@@ -14,6 +14,7 @@ namespace CoreWebApi
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            UserCollection collection = new UserCollection();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
