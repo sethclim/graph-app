@@ -5,7 +5,7 @@ namespace CoreWebApi.Data.Repository.contracts
 {
     public interface IUserRepository
     {
-        Task<User> FindAllUserById(string id);
+        Task<User> FindUserById(string id);
         void InsertUser(User user);
     }
 }

@@ -24,7 +24,7 @@ namespace CoreWebApi.Controllers
         [HttpGet]
         public async Task<User> Get()
         {
-            return await _userRepository.FindAllUserById("000000000000000000000000");
+            return await _userRepository.FindUserById("000000000000000000000000");
         }
     }
 }

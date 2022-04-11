@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using CoreWebApi.Data.models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -8,4 +11,7 @@ public class User{
 
     [BsonElement("Name")]
     public string Name {get; set;}
+    
+    [BsonElement("Graphs")]
+    public Graph[] Graphs { get; set; }
 }

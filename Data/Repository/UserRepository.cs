@@ -10,7 +10,7 @@ namespace CoreWebApi.Data.Repository
     public class UserRepository : IUserRepository
     {
         private readonly MongoContext _context;
-        public IMongoCollection<User> Users { get; }
+        private IMongoCollection<User> Users { get; }
 
         public UserRepository(MongoContext context)
         {
@@ -18,7 +18,7 @@ namespace CoreWebApi.Data.Repository
             Users = _context.Database.GetCollection<User>("Users");
         }
 
-        public async Task<User> FindAllUserById(string id)
+        public async Task<User> FindUserById(string id)
         {
             return await Users.Find(x => x.Id == id).SingleAsync();
         }
@@ -27,7 +27,7 @@ namespace CoreWebApi.Data.Repository
         {
             Users.InsertOne(user);
         }
-
+        
     }
 
 }

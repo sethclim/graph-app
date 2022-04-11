@@ -33,6 +33,7 @@ namespace CoreWebApi
             services.Configure<DatabaseSettings>(Configuration.GetSection("MongoConnection"));
             services.AddSingleton<MongoContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGraphRepository, GraphRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
