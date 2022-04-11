@@ -13,8 +13,10 @@ namespace CoreWebApi
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("Starting in Main"); 
+            // var collection = new UserCollection();
             CreateHostBuilder(args).Build().Run();
-            UserCollection collection = new UserCollection();
+           
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

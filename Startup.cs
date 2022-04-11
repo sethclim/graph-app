@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using CoreWebApi.Data;
+using CoreWebApi.Data.Repository;
+using CoreWebApi.Data.Repository.contracts;
+
 
 namespace CoreWebApi
 {
@@ -26,6 +30,9 @@ namespace CoreWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DatabaseSettings>(Configuration.GetSection("MongoConnection"));
+            services.AddSingleton<MongoContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
