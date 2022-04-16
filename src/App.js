@@ -1,46 +1,33 @@
-import "./css/base.css";
-import "./css/toplevel.css";
+import "./scss/base.scss";
+import "./scss/toplevel.scss";
 import Graph from "./components/Graph";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import MainToolbar from "./components/MainToolbar";
-import { InputProvider } from "./providers/InputProvider";
-import { GraphProvider } from "./providers/GraphProvider";
 import GraphControls from "./components/GraphControls";
 import CogButton from "./components/CogButton";
 import { useState } from "react";
+import Providers from "./providers/index"
+
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Home from "./pages/Home";
+import SignIn from "./pages/Signn";
 
 function App() {
 
 
-  const [controls, setControls] = useState(false);
+  return (
+      <Providers>
+
+        <BrowserRouter>
+          <Switch>
+            <Route path={'/'} component={SignIn} exact/>
+            <Route path={'/home'} component={Home} exact/>
+          </Switch>
+        </BrowserRouter>
 
   
-
-  function test (){
-    setControls(!controls);
-     console.log("controls " + controls) 
-  }
-
-  return (
-    <InputProvider>
-      <div className="App" id="top-grid">
-        <Header className="header" />
-        <div className="content container">
-          <GraphProvider>
-            <MainToolbar />
-            <Graph />
-            <CogButton onClick={test}  />
-
-            {
-              controls?   <GraphControls /> : null
-            }
-          
-          </GraphProvider>
-        </div>
-        <Footer className="footer" />
-      </div>
-    </InputProvider>
+      </Providers>
   );
 }
 

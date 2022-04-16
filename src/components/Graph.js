@@ -5,7 +5,7 @@ import Canvas from "./Canvas";
 import { GraphHelper } from "../models/GraphHelper";
 import DrawCanvas from "./DrawCanvas";
 
-import "../css/graph.css";
+import "../scss/graph.scss";
 import { InputContext } from "../providers/InputProvider";
 import { GraphContext } from "../providers/GraphProvider";
 
