@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import "../css/maintoolbar.css";
+import "../scss/maintoolbar.scss";
 import { PenOptions } from "../models/PenOptions";
 import { InputContext } from "../providers/InputProvider";
 
@@ -32,7 +32,7 @@ const MainToolbar = () => {
       <button className="toolbtn" onClick={() => setPenSelection(PenOptions.dot)}>
         Dot
       </button>
-      <button className="toolbtn">Eraser</button>
+      {/* <button className="toolbtn">Eraser</button> */}
       <button className="toolbtn" onClick={() => handleClear()}>
         Clear
       </button>

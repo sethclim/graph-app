@@ -1,4 +1,4 @@
-import "../css/cogbutton.css";
+import "../scss/components/cogbutton.scss";
 
 const CogButton = ({onClick}) =>{
 

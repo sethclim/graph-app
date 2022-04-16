@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,UAAU,CAAC;EACT,QAAQ,EAAE,KAAK;EACf,GAAG,EAAE,EAAE;EACP,KAAK,EAAE,EAAE;EACT,OAAO,EAAE,CAAC;EACV,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,OAAO;CAChB",
-    "sources": [
-        "../scss/components/cogbutton.scss"
-    ],
-    "names": [],
-    "file": "cogbutton.css"
-}
