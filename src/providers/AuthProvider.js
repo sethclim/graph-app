@@ -9,7 +9,7 @@ const AuthProvider = ({children}) =>{
 
     const [authenticated, setAuthenticated] = useState();
     const [tracking, setTracking] = useState();
-    const [profileCode, setProfileCode] = useState();
+    const [profile, setProfile] = useState(null);
     const [userName, setUserName] = useState();
 
     const[transRefId, setTransRefId] = useState();
@@ -73,15 +73,20 @@ const AuthProvider = ({children}) =>{
     }
     
     const stopTracking = async() => {
-        await kineticInstance.trackStop(function(trackingData){
-            setData(trackingData)
-            console.log(trackingData)
-            console.log('tracker is stopped')
-            localStorage.setItem('records',JSON.stringify(trackingData))
-            setTracking(false)
-            loginProfile(userName)
-        });
-        setTracking(false);
+        if(profile!==null){
+            console.log("profile " + JSON.stringify(profile))
+            return makeTransaction()
+        }
+        else{
+            await kineticInstance.trackStop(function(trackingData){
+                setData(trackingData)
+                // console.log(trackingData)
+                // console.log('tracker is stopped')
+                localStorage.setItem('records',JSON.stringify(trackingData))
+                setTracking(false)
+                loginProfile(userName)
+            });
+        }
     }
     
     /* For creating new profile for the user account with the user name */
@@ -99,16 +104,18 @@ const AuthProvider = ({children}) =>{
             if (error) {
                 setGetProfileError(error.data.errors[0].message)
             } else {
-                setProfileCode(profileData.data.profileCode)
+                setProfile(profileData.data)
                 setUserName(userName)    
+                stopTracking()
                 setAuthenticated(true)
+            
             }
         });
     }
     
     const makeTransaction = () => {
     
-        if (profileCode == "" || userName == "") {
+        if (profile.profileCode == "" || profile.userName == "") {
             localStorage.removeItem("authToken");
             setAuthenticated(false)
 
@@ -117,7 +124,7 @@ const AuthProvider = ({children}) =>{
                 var transRefId = makeTransRefId();
                 var body = {
                     gestureInfo: trackData,
-                    profileCode: profileCode,
+                    profileCode: profile.profileCode,
                     transRefId: transRefId
                 };
     
@@ -175,7 +182,7 @@ const AuthProvider = ({children}) =>{
     // allowTransaction = true/false whether transaction is error or correct
     const reportAction = (action, checkResp, allowTransaction) => {
         var inputData = {
-            profileCode:profileCode,
+            profileCode:profile.profileCode,
             action: action,
             refId: checkResp.refId,
             type: checkResp.data.type ? checkResp.data.type : 'gesture'
@@ -251,7 +258,8 @@ const AuthProvider = ({children}) =>{
         message,
         getProfileError,
         gestureError,
-        setUserName
+        setUserName,
+        loginProfile
     }
 
     return(

@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { useHistory } from 'react-router-dom';
-
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import "../scss/signin.scss";
+
 
 const SignIn = ()=>{
 
-
-    const {startTracking, stopTracking, authenticated, setUserName} = useContext(AuthContext)
+    const [name, setName] = useState();
+    const {startTracking, loginProfile, authenticated, setUserName} = useContext(AuthContext)
     const history = useHistory();
 
     const submit = () =>{
-        stopTracking()
+        loginProfile(name)
     }
 
 
@@ -21,13 +23,21 @@ const SignIn = ()=>{
     },[authenticated, history])
 
     return(
-        <div>
+        <div className="App" id="top-grid">
+         <Header />
+            <div className="signinWrap">
+               
+                <div id="trackarea" onMouseEnter={() => startTracking()} >
+                <div class="form__group field">
+                    <input onChange={(e) =>setName(e.target.value)} type="input" class="form__field" placeholder="Name" name="name" id='name' required />
+                    <label for="name" class="form__label">Name</label>
+                </div>
+                
+                    <button className="button" onClick={() =>submit()} >Submit</button>
+                </div>
 
-            <div id="trackarea" onMouseEnter={() => startTracking()} >
-                <input onChange={(e) =>setUserName(e.target.value)} />
-                <button onClick={() =>submit()} >Submit</button>
             </div>
-
+            <Footer />
         </div>
     )
 }
