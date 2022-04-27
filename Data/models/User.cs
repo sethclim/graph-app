@@ -4,14 +4,16 @@ using CoreWebApi.Data.models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-public class User{
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id {get; set;}
+namespace CoreWebApi.Data.models
+{
+    public class User{
+        [BsonId]
+        public ObjectId Id {get; set;}
 
-    [BsonElement("Name")]
-    public string Name {get; set;}
+        [BsonElement("Name")]
+        public string Name {get; set;}
     
-    [BsonElement("Graphs")]
-    public Graph[] Graphs { get; set; }
+        [BsonElement("Graphs")]
+        public Graph[] Graphs { get; set; }
+    }
 }

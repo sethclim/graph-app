@@ -2,30 +2,39 @@ using System;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoreWebApi.Data.DTOs;
+using CoreWebApi.Data.models;
 using CoreWebApi.Data.Repository.contracts;
 using MongoDB.Bson;
+using MongoDB.Driver.Core.Operations;
 
 namespace CoreWebApi.Data.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly MongoContext _context;
         private IMongoCollection<User> Users { get; }
 
         public UserRepository(MongoContext context)
         {
-            _context = context;
-            Users = _context.Database.GetCollection<User>("Users");
+            Users = context.Database.GetCollection<User>("Users");
         }
 
         public async Task<User> FindUserById(string id)
         {
-            return await Users.Find(x => x.Id == id).SingleAsync();
+            return await Users.Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
         }
 
-        public void InsertUser(User user)
+        public async Task<ObjectId> InsertUser(InsertUserDTO userDto)
         {
-            Users.InsertOne(user);
+            var user = new User
+            {
+                Id = ObjectId.GenerateNewId(),
+                Name = userDto.Name,
+                Graphs = Array.Empty<Graph>()
+            };
+            Console.WriteLine("ID " + user.Id);
+            await Users.InsertOneAsync(user);
+            return user.Id;
         }
         
     }
