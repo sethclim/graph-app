@@ -24,7 +24,7 @@ namespace CoreWebApi.Data.Repository
             return await Users.Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
         }
 
-        public async Task<ObjectId> InsertUser(InsertUserDTO userDto)
+        public async Task<ObjectId> InsertUser(UserDto userDto)
         {
             var user = new User
             {

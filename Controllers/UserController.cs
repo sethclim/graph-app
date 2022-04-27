@@ -28,7 +28,7 @@ namespace CoreWebApi.Controllers
         }
         
         [HttpPost]
-        public async Task<OkObjectResult> InsertUser([FromBody] InsertUserDTO userDto)
+        public async Task<OkObjectResult> InsertUser([FromBody] UserDto userDto)
         {
             var id = await _userRepository.InsertUser(userDto);
             Console.WriteLine("UC ID " + id);

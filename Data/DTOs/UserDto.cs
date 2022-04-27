@@ -1,6 +1,6 @@
 namespace CoreWebApi.Data.DTOs
 {
-    public class InsertUserDTO
+    public class UserDto
     {
         public string Name {get; set;}
     }

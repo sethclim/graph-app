@@ -16,16 +16,16 @@ namespace CoreWebApi.Data.Repository
         {
             _users = context.Database.GetCollection<User>("Users");
         }
-        public async Task<UpdateResult> InsertGraph(InsertGraphDTO graphDto)
+        public async Task<UpdateResult> InsertGraph(GraphDto graphDto)
         {
             var user = Builders<User>.Filter.Where( u => u.Id == ObjectId.Parse(graphDto.UserId));
 
             var graph = new Graph
             {
                 Id = ObjectId.GenerateNewId(),
-                // Line = graphDto.Line,
-                // Dots = graphDto.Dots,
-                // Points = graphDto.Points,
+                Line = graphDto.Line,
+                Dots = graphDto.Dots,
+                Points = graphDto.Points,
                 XMin = graphDto.XMin,
                 XMax = graphDto.XMax,
                 XStep = graphDto.XStep,

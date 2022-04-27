@@ -22,7 +22,7 @@ namespace CoreWebApi.Controllers
         }
         
         [HttpPost]
-        public async Task<UpdateResult> InsertGraph([FromBody] InsertGraphDTO graphDto)
+        public async Task<UpdateResult> InsertGraph([FromBody] GraphDto graphDto)
         {
             Console.WriteLine("Endpoint Insert");
             return await _graphRepository.InsertGraph(graphDto);

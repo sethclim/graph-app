@@ -9,6 +9,6 @@ namespace CoreWebApi.Data.Repository.contracts
     public interface IUserRepository
     {
         Task<User> FindUserById(string id);
-        Task<ObjectId> InsertUser(InsertUserDTO userDto);
+        Task<ObjectId> InsertUser(UserDto userDto);
     }
 }

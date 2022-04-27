@@ -7,7 +7,7 @@ namespace CoreWebApi.Data.Repository.contracts
 {
     public interface IGraphRepository
     { 
-        Task<UpdateResult> InsertGraph(InsertGraphDTO graphDto);
+        Task<UpdateResult> InsertGraph(GraphDto graphDto);
 
     }
 }
