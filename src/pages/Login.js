@@ -30,8 +30,8 @@ const Login = ()=>{
             <div className="signinPage">
                 <div className="signinWrap"> 
                     <div class="form__group field">
-                         <label for="email" class="form__label">Email</label>
                          <input onChange={(e) =>setEmail(e.target.value)} type="input" class="form__field" placeholder="Email" name="email" id='email' required />
+                         <label for="email" class="form__label">Email</label>
                     </div>
                     <div class="form__group field">
                         <input onChange={(e) =>setPassword(e.target.value)} type="input" class="form__field" placeholder="Password" name="password" id='password' required />

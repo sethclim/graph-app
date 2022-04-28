@@ -12,9 +12,12 @@ const AuthProvider = ({children}) =>{
     const {send : signup, success : signupSuccess } = usePost(EndPoints.signup);
 
     useEffect(()=>{
-        console.log("Login Success " + JSON.stringify(loginSuccess))
-        //setAuthenticated(true)
-        //setToken(loginSuccess.token)
+        if(loginSuccess !== undefined && loginSuccess.token !== undefined)
+        {
+            setAuthenticated(true)
+            setToken(loginSuccess.token)
+        }
+            
     },[loginSuccess])
 
     const value = {

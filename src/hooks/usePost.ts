@@ -5,7 +5,7 @@ export const usePost = (url : string) =>{
     
     const [error, setError] = useState<unknown>();
     const [sending, setSending] = useState<boolean>();
-    const [success, setSuccess] = useState();
+    const [success, setSuccess] = useState<any>();
 
 
     const send = async (data : JSON) =>{

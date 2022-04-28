@@ -6,14 +6,13 @@ import "../scss/signin.scss";
 
 
 const Signup = ()=>{
-    const {Signup, signupSuccess} = useContext(AuthContext)
+    const {signup, signupSuccess} = useContext(AuthContext)
     const history = useHistory();
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [passwordConfirm, setPasswordConfirm] = useState();
-
 
     useEffect(()=>{
         if(signupSuccess)
@@ -27,7 +26,7 @@ const Signup = ()=>{
             "password" : password,
             "passwordConfirm" : passwordConfirm
         }
-        Signup(signupDto)
+        signup(signupDto)
     }
 
     return(
@@ -35,20 +34,20 @@ const Signup = ()=>{
             <div className="signinPage">
                 <div className="signinWrap"> 
                     <div class="form__group field">
-                        <label for="name" class="form__label">Name</label>
                         <input onChange={(e) =>setName(e.target.value)} type="input" class="form__field" placeholder="Name" name="name" id='name' required /> 
+                        <label for="name" class="form__label">Name</label>
                     </div>
                     <div class="form__group field">
-                        <label for="email" class="form__label">Email</label>
                         <input onChange={(e) =>setEmail(e.target.value)} type="input" class="form__field" placeholder="Email" name="email" id='email' required />
+                        <label for="email" class="form__label">Email</label>
                     </div>
                     <div class="form__group field">
-                        <label for="password" class="form__label">Password</label>
                         <input onChange={(e) =>setPassword(e.target.value)} type="input" class="form__field" placeholder="Password" name="password" id='password' required />
+                        <label for="password" class="form__label">Password</label>
                     </div>
                     <div class="form__group field">
-                        <label for="passwordconfirm" class="form__label">Password Confirm</label>
                         <input onChange={(e) =>setPasswordConfirm(e.target.value)} type="input" class="form__field" placeholder="Confirm Password" name="passwordconfirm" id='passwordconfirm' required />
+                        <label for="passwordconfirm" class="form__label">Password Confirm</label>
                     </div>
                     <button className="button" onClick={() =>submit()}>Submit</button>
                 </div>
