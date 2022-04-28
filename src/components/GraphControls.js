@@ -2,9 +2,15 @@ import { useContext, useState } from "react";
 import "../scss/graph-controls.scss";
 import { Range } from "../models/Range";
 import { GraphContext } from "../providers/GraphProvider";
+import { InputContext } from "../providers/InputProvider";
+import { usePost } from "../hooks/usePost"
+import { EndPoints } from "../constants/EndPoints";
 
 const GraphControls = () => {
   const {setXRange, setYRange} = useContext(GraphContext);
+
+  const {points,linePoints,dots} = useContext(InputContext);
+  const {send, success } = usePost(EndPoints.insertGraph);
 
   const [xMin, setXMin] = useState(-5)
   const [xMax, setXMax] = useState(5)
@@ -112,6 +118,22 @@ const GraphControls = () => {
     return true
   }
 
+  const handleSave = async () =>{
+    const graphData = {
+      "userid":"62696d965901422ab6f3e23b",
+      lines : linePoints,
+      dots : dots,
+      points : points,
+      XMin :  xMin,
+      XMax : xMax,
+      XStep : xStep,
+      YMin : yMin,
+      YMax : yMax,
+      YStep : yStep
+    }
+    await send(graphData);
+  }
+
   return (
     <div id="graph-controls">
   
@@ -132,6 +154,10 @@ const GraphControls = () => {
             <input type="text" placeholder ={yMax}  onChange={(event) => handleYMaxChange(event.target.value)} />
             <label>Step</label>
             <input type="text" placeholder ={yStep} onChange={(event) => handleYStepChange(event.target.value)} />
+        </div>
+
+        <div className="control-row">
+          <button onClick={()=> handleSave()}>Save</button>
         </div>
     </div>
   );
