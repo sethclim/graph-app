@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using CoreWebApi.Data.models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -12,7 +9,13 @@ namespace CoreWebApi.Data.models
 
         [BsonElement("Name")]
         public string Name {get; set;}
-    
+        
+        [BsonElement("Email")]  
+        public string Email { get; set; }
+        
+        [BsonElement("Password")]
+        public string Password { get; set; }
+
         [BsonElement("Graphs")]
         public Graph[] Graphs { get; set; }
     }

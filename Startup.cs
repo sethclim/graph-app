@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using CoreWebApi.Data;
 using CoreWebApi.Data.Repository;
 using CoreWebApi.Data.Repository.contracts;
+using CoreWebApi.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace CoreWebApi
@@ -34,6 +31,27 @@ namespace CoreWebApi
             services.AddSingleton<MongoContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGraphRepository, GraphRepository>();
+            
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>  
+            {  
+                options.SaveToken = true;  
+                options.RequireHttpsMetadata = false;  
+                options.TokenValidationParameters = new TokenValidationParameters()  
+                {  
+                    ValidateIssuer = false,  
+                    ValidateAudience = false,  
+                    //ValidAudience = Configuration["JWT:ValidAudience"],  
+                    //ValidIssuer = Configuration["JWT:ValidIssuer"],  
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Secret"]))  
+                };  
+            });  
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -60,8 +78,13 @@ namespace CoreWebApi
                 .AllowAnyMethod()
                 .AllowCredentials()
             );
+            
+            
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
-            app.UseAuthorization();
+            app.UseAuthentication();  
+            app.UseAuthorization(); 
 
             app.UseEndpoints(endpoints =>
             {

@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using CoreWebApi.Data.DTOs;
 using CoreWebApi.Data.models;
 using CoreWebApi.Data.Repository.contracts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,19 +22,39 @@ namespace CoreWebApi.Controllers
             _logger = logger;
             _userRepository = repo;
         }
-
+        
+        [Authorize]
         [HttpGet]
-        public async Task<User> GetUser()
+        public  ActionResult<User> GetUser()
         {
-            return await _userRepository.FindUserById("62696d965901422ab6f3e23b");
+            var user = (User)HttpContext.Items["User"];
+            Console.WriteLine("User ID " +  user);
+
+            if (user != null)
+                return user!;
+
+            return BadRequest();
         }
         
+        [AllowAnonymous]
         [HttpPost]
         public async Task<OkObjectResult> InsertUser([FromBody] UserDto userDto)
         {
             var id = await _userRepository.InsertUser(userDto);
-            Console.WriteLine("UC ID " + id);
             return Ok(id);
+        }
+        
+        [AllowAnonymous]
+        [Route("authenticate")]
+        [HttpPost]
+        public ActionResult Login([FromBody] LoginDto loginDto)
+        {
+            var token = _userRepository.Authenticate(loginDto);
+
+            if (token == null)
+                return Unauthorized();
+
+            return Ok(new {token});
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using CoreWebApi.Data.DTOs;
 using CoreWebApi.Data.models;
@@ -11,7 +10,6 @@ namespace CoreWebApi.Data.Repository
     public class GraphRepository : IGraphRepository
     {
         private readonly IMongoCollection<User> _users;
-
         public GraphRepository(MongoContext context)
         {
             _users = context.Database.GetCollection<User>("Users");
@@ -40,5 +38,7 @@ namespace CoreWebApi.Data.Repository
 
             return await _users.UpdateOneAsync(user, pushGraphDefinition);
         }
+        
+        
     }
 }
