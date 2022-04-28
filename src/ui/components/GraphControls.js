@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
+import { Range } from "../../domain/models/Range";
+import { GraphContext } from "../../domain/providers/GraphProvider";
+import { InputContext } from "../../domain/providers/InputProvider";
+import { usePost } from "../../domain/hooks/usePost"
+import { EndPoints } from "../../domain/constants/EndPoints";
+
 import "../scss/graph-controls.scss";
-import { Range } from "../models/Range";
-import { GraphContext } from "../providers/GraphProvider";
-import { InputContext } from "../providers/InputProvider";
-import { usePost } from "../hooks/usePost"
-import { EndPoints } from "../constants/EndPoints";
 
 const GraphControls = () => {
   const {setXRange, setYRange} = useContext(GraphContext);

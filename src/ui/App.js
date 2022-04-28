@@ -1,6 +1,6 @@
 import "./scss/base.scss";
 import "./scss/toplevel.scss";
-import Providers from "./providers/index"
+import Providers from "../domain/providers/index"
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from "./pages/Home";

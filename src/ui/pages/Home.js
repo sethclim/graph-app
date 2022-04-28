@@ -6,7 +6,7 @@ import MainToolbar from "../components/MainToolbar";
 import GraphControls from "../components/GraphControls";
 import CogButton from "../components/CogButton";
 import { useState } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import { AuthContext } from "../../domain/providers/AuthProvider";
 import {useHistory} from "react-router-dom"
 import Layout from "../components/Layout";
 

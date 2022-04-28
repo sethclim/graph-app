@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "../scss/maintoolbar.scss";
-import { PenOptions } from "../models/PenOptions";
-import { InputContext } from "../providers/InputProvider";
+import { PenOptions } from "../../domain/models/PenOptions";
+import { InputContext } from "../../domain/providers/InputProvider";
 
 
 const MainToolbar = () => {

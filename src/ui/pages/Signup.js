@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../providers/AuthProvider";
+import { AuthContext } from "../../domain/providers/AuthProvider";
 import { useHistory } from 'react-router-dom';
 import Layout from "../components/Layout";
 import "../scss/signin.scss";

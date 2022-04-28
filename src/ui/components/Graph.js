@@ -2,12 +2,12 @@ import { useLayoutEffect, useRef, useState, useContext } from "react";
 import Canvas from "./Canvas";
 
 //import { Point } from "../models/point";
-import { GraphHelper } from "../models/GraphHelper";
+import { GraphHelper } from "../../domain/models/GraphHelper";
 import DrawCanvas from "./DrawCanvas";
 
 import "../scss/graph.scss";
-import { InputContext } from "../providers/InputProvider";
-import { GraphContext } from "../providers/GraphProvider";
+import { InputContext } from "../../domain/providers/InputProvider";
+import { GraphContext } from "../../domain/providers/GraphProvider";
 
 const Graph = () => {
   const graphRef = useRef();
