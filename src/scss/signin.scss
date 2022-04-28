@@ -1,9 +1,15 @@
 @import "base.scss";
 
-.signinWrap{
 
+.signinPage{
+  @include center-all;
+}
+
+.signinWrap{
+    width: 50%;
     height: 80vh;
     @include center-all;
+    flex-direction: column;
 }
 
 
