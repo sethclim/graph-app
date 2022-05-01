@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AuthorizeRoute from "./components/AuthorizeRoute";
 import Signup from "./pages/Signup";
+import SavedGraphs from "./pages/savedgraphs/SavedGraphs";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Switch>
             <Route path={'/login'} component={Login} />
             <Route path={'/signup'} component={Signup} />
+            <Route path={'/saved'} component={SavedGraphs} />
             <AuthorizeRoute path={'/home'} component={Home} redirectPath="/login" exact/>
           </Switch>
         </BrowserRouter>

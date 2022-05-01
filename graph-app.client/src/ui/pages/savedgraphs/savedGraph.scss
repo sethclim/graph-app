@@ -1,3 +1,24 @@
+@import "../../scss/base.scss";
+
+.grid-wrap{
+    min-height: 80vh;
+    @include center-all;
+
+}
 .grid{
     display: grid;
+    height: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grid-item{
+    background-color: red;
+    height: 20em;
+    width: 20em;
+    margin: 5px;
+}
+
+.grid-item:hover{
+    cursor: pointer;
+    background-color: lighten(red, 25%);
 }
