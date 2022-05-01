@@ -1,0 +1,12 @@
+@import "../base";
+
+//-----------Footer-----------//
+.footer {
+  grid-column: 1/13;
+  @include center-all;
+  height: 5vh;
+  font-size: 1.3em;
+  padding: 10px;
+  color: white;
+  background-color: #243550;
+}

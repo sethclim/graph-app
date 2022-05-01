@@ -1,0 +1,32 @@
+@import "base.scss";
+
+.graph-wrapper {
+  grid-column: 4/11;
+  @include center-all;
+}
+
+#graph {
+  height: 80%;
+  width: 100%;
+  position: relative;
+  border: 1px solid blue;
+  background-color: white;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#background-layer {
+  z-index: 1;
+}
+
+#foreground-layer {
+  z-index: 2;
+}
+
+#draw-layer {
+  z-index: 3;
+}
