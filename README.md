@@ -1,3 +1,3 @@
 # graph-app
 
-A had drawn graphing application to quick sketch up graphs
+A freehand graphing application to quick sketch up graphs
