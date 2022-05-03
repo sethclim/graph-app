@@ -1,12 +1,16 @@
 import { Menu, Transition } from '@headlessui/react'
+import { MenuIcon } from '@heroicons/react/solid'
 import { Fragment } from 'react'
 import styles from "./MainMenu.module.scss"
 import { Link } from 'react-router-dom';
 
+
 const MainMenu = () => {
     return (
       <Menu as="div" className={styles.menu}>
-        <Menu.Button className={styles.menuButton}>More</Menu.Button>    
+        <Menu.Button className={styles.menuButton}>
+          <MenuIcon className={styles.menuSvg} />
+        </Menu.Button>    
         <Transition
             as={Fragment}
             enter=""
