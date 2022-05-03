@@ -29,19 +29,19 @@ namespace CoreWebApi.Data.Repository
 
         public async Task<User> FindUserByIdAsync(string id)
         {
-            return await Users.Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
+            return await Users.Find(x => x.Id == id).SingleAsync();
         }
         
         public User FindUserById(string id)
         {
-            return Users.Find(x => x.Id == ObjectId.Parse(id)).Single();
+            return Users.Find(x => x.Id == id).Single();
         }
 
-        public async Task<ObjectId> InsertUser(UserDto userDto)
+        public async Task<string> InsertUser(UserDto userDto)
         {
             var user = new User
             {
-                Id = ObjectId.GenerateNewId(),
+                Id = ObjectId.GenerateNewId().ToString(),
                 Name = userDto.Name,
                 Email = userDto.Email,
                 Password = userDto.Password,

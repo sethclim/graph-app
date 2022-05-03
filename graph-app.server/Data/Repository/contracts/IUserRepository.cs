@@ -10,7 +10,7 @@ namespace CoreWebApi.Data.Repository.contracts
     {
         Task<User> FindUserByIdAsync(string id);
         User FindUserById(string id);
-        Task<ObjectId> InsertUser(UserDto userDto);
+        Task<string> InsertUser(UserDto userDto);
         public string Authenticate(LoginDto loginDto);
     }
 }

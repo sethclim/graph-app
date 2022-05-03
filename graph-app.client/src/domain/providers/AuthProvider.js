@@ -14,6 +14,7 @@ const AuthProvider = ({ children }) => {
     const { fetch, data: user, error } = useFetch(EndPoints.getUser);
 
     const getUserCallBack = useCallback(() => {
+        console.log("getUserCallBack")
         if(loginSuccess !== undefined && loginSuccess.token !== undefined){
             (async function () {
                 await fetch(loginSuccess.token)
@@ -29,6 +30,11 @@ const AuthProvider = ({ children }) => {
         }
     }, [getUserCallBack, loginSuccess])
 
+    const reFetchUser = () =>{
+        console.log("reFetch user")
+        getUserCallBack()
+    }
+
     const value = {
         login,
         signup,
@@ -36,7 +42,8 @@ const AuthProvider = ({ children }) => {
         signupSuccess,
         authenticated,
         token,
-        user
+        user,
+        reFetchUser
     }
 
     return (

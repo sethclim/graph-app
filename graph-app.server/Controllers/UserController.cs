@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CoreWebApi.Data.DTOs;
 using CoreWebApi.Data.models;
 using CoreWebApi.Data.Repository.contracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -28,12 +26,16 @@ namespace CoreWebApi.Controllers
         public  ActionResult<User> GetUser()
         {
             var user = (User)HttpContext.Items["User"];
-            Console.WriteLine("User ID " +  user);
 
-            if (user != null)
-                return user!;
-
-            return BadRequest();
+            if (user == null)
+                return BadRequest();
+            
+            return Ok(new
+            {
+                id = user.Id,
+                name = user.Name,
+                graphs = user.Graphs
+            });
         }
         
         [AllowAnonymous]
