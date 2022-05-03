@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { useFetch } from "../../../domain/hooks/useFetch";
 import Layout from "../../components/Layout"
 import { AuthContext } from "../../../domain/providers/AuthProvider";
 
 import "./savedGraph.scss"
+import { Link } from "react-router-dom";
 
 const SavedGraphs = () => {
 
@@ -11,8 +11,7 @@ const SavedGraphs = () => {
 
     useEffect(()=>{
         reFetchUser()
-        console.log(JSON.stringify(user))
-    })
+    },[])
 
     return(
         <Layout>
@@ -22,8 +21,8 @@ const SavedGraphs = () => {
                         (user !== null && user.graphs !== undefined) ?(
                           user.graphs !== null ? (
                     
-                            user.graphs.map( graph => {
-                                    return <GraphItem graph={graph} />
+                            user.graphs.map( (graph, idx) => {
+                                    return <GraphItem graph={graph} idx={idx} />
                                 })
                             ): null  
                         ): null
@@ -34,11 +33,20 @@ const SavedGraphs = () => {
     )
 }
 
-const GraphItem = ({graph}) => { 
+const GraphItem = ({graph, idx}) => { 
+
+    
+
     return(
-        <div className="grid-item">
+        <Link 
+            className="grid-item" 
+            to={{
+                pathname: "/home",
+                state: { fromSavedGraph: idx }
+            }}
+         >
             <p>{graph.id.timestamp}</p>
-        </div>
+        </Link>
     )
 }
 

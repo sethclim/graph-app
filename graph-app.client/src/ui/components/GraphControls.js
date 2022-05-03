@@ -4,13 +4,18 @@ import { GraphContext } from "../../domain/providers/GraphProvider";
 import { InputContext } from "../../domain/providers/InputProvider";
 import { usePost } from "../../domain/hooks/usePost"
 import { EndPoints } from "../../domain/constants/EndPoints";
+import { AuthContext } from "../../domain/providers/AuthProvider";
 
 import "../scss/graph-controls.scss";
 
 const GraphControls = () => {
-  const {setXRange, setYRange} = useContext(GraphContext);
 
+
+  const { user } = useContext(AuthContext)
+
+  const {setXRange, setYRange} = useContext(GraphContext);
   const {points,linePoints,dots} = useContext(InputContext);
+
   const {send, success } = usePost(EndPoints.insertGraph);
 
   const [xMin, setXMin] = useState(-5)
@@ -120,8 +125,12 @@ const GraphControls = () => {
   }
 
   const handleSave = async () =>{
+
+    if(user == null || user.id == null)
+      return
+
     const graphData = {
-      "userid":"6269efee5c7946af1d37dc2c",
+      "userid": user.id,
       lines : linePoints,
       dots : dots,
       points : points,

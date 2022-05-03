@@ -7,24 +7,40 @@ import GraphControls from "../components/GraphControls";
 import CogButton from "../components/CogButton";
 import { useState } from "react";
 import { AuthContext } from "../../domain/providers/AuthProvider";
-import {useHistory} from "react-router-dom"
+import { InputContext } from "../../domain/providers/InputProvider";
 import Layout from "../components/Layout";
 
 
-const Home = () =>{
-
-    const {authenticated} = useContext(AuthContext)
+const Home = ({location}) =>{
     const [controls, setControls] = useState()
+    const [graphIndex, setGraphIndex] = useState(null) 
+    
+    const { user } = useContext(AuthContext)
+    const { loadGraph } = useContext(InputContext);
 
-    const history = useHistory()
 
     const handleControls = () =>{
         setControls(!controls)
     }
     useEffect(()=>{
-        if(authenticated)
-            history.push("/home")
-    },[authenticated, history])
+
+        if(location.state === undefined || location.state.fromSavedGraph === undefined)
+           return
+
+        setGraphIndex(location.state.fromSavedGraph)
+           
+    },[location.state])
+
+
+    useEffect(()=>{
+
+        if(graphIndex === undefined || graphIndex === null || user == null || user.graphs === undefined || user.graphs === null )
+            return
+
+        const graph = user.graphs[graphIndex]
+        loadGraph(graph)
+
+    },[graphIndex, user])
     
     
     return(

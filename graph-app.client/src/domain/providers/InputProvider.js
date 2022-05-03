@@ -11,6 +11,21 @@ export const InputProvider = ({ children }) => {
   const [redraw, setRedraw] = useState(false);
   const [color, setColor] = useState("#EB144C");
 
+  const loadGraph = (graph) =>{
+    if(graph.points != null){
+      setPoints(graph.points)
+    }
+
+    if(graph.dots != null){
+      setDots(graph.dots)
+    }
+    if(graph.line != null){
+      setLinePoints(graph.line)
+    }
+
+    setRedraw(true)
+  }
+
   return (
     <InputContext.Provider
       value={{
@@ -25,7 +40,8 @@ export const InputProvider = ({ children }) => {
         redraw,
         setRedraw,
         color,
-        setColor
+        setColor,
+        loadGraph
       }}
     >
       {children}
