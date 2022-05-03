@@ -19,6 +19,15 @@ $error-color: red;
   justify-content: center;
 }
 
+@mixin container() {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
 //-----------General-----------//
 .container {
   display: grid;
@@ -40,17 +49,23 @@ $error-color: red;
   flex-direction: column;
 }
 
-.header {
-  grid-row: 1;
-  height: 10vh;
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+// .header {
+//   grid-row: 1;
+//   height: 10vh;
+// }
 
 .content {
   height: 80vh;
   background-color: $background-color;
 }
 
-.footer {
-  grid-row: 3;
-  height: 10vh;
-}
+// .footer {
+//   grid-row: 3;
+//   height: 10vh;
+// }
