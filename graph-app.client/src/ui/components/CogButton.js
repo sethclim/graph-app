@@ -22,7 +22,6 @@ const CogButton = ({onClick}) =>{
             </svg>
         </div>
     )
-
 }
 
 export default CogButton;

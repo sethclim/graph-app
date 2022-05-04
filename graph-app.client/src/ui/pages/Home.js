@@ -8,7 +8,7 @@ import CogButton from "../components/CogButton";
 import { useState } from "react";
 import { AuthContext } from "../../domain/providers/AuthProvider";
 import { InputContext } from "../../domain/providers/InputProvider";
-import Layout from "../components/Layout";
+import Layout from "../components/utility/Layout";
 
 
 const Home = ({location}) =>{

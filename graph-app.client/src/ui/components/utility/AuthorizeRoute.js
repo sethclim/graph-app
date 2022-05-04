@@ -2,7 +2,7 @@
 import  { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
-import { AuthContext } from '../../domain/providers/AuthProvider'
+import { AuthContext } from '../../../domain/providers/AuthProvider'
 
 const AuthorizeRoute = ({ component: Component, redirectPath = "/", ...rest }) => {
 

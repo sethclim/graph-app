@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../domain/providers/AuthProvider";
 import { useHistory } from 'react-router-dom';
 import "../scss/signin.scss";
-import Layout from "../components/Layout";
+import Layout from "../components/utility/Layout";
 
 const Login = ()=>{
     const {login, authenticated} = useContext(AuthContext)

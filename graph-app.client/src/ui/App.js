@@ -5,7 +5,7 @@ import Providers from "../domain/providers/index"
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import AuthorizeRoute from "./components/AuthorizeRoute";
+import AuthorizeRoute from "./components/utility/AuthorizeRoute";
 import Signup from "./pages/Signup";
 import SavedGraphs from "./pages/savedgraphs/SavedGraphs";
 
