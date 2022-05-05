@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import Layout from "../../components/utility/Layout"
 import { AuthContext } from "../../../domain/providers/AuthProvider";
+import Layout from "../../components/utility/Layout"
 
 import "./savedGraph.scss"
 import { Link } from "react-router-dom";
@@ -18,13 +18,10 @@ const SavedGraphs = () => {
             <div className="grid-wrap">
                 <div className="grid">
                     {
-                        (user !== null && user.graphs !== undefined) ?(
-                          user.graphs !== null ? (
-                    
+                        (user !== null && user.graphs !== undefined && user.graphs !== null) ?(      
                             user.graphs.map( (graph, idx) => {
                                     return <GraphItem graph={graph} idx={idx} />
                                 })
-                            ): null  
                         ): null
                     }
                 </div>

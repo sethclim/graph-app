@@ -14,7 +14,7 @@ const GraphControls = () => {
   const {setXRange, setYRange, xRange, yRange,} = useContext(GraphContext);
   const {points,linePoints,dots}                = useContext(InputContext);
 
-  const {send, success } = usePost(EndPoints.insertGraph);
+  const {send } = usePost(EndPoints.insertGraph);
 
   const {handleMin : handleXMin, handleMax : handleXMax, handleStep : handleXStep} = useGraphScaleUpdate(setXRange);
   const {handleMin : handleYMin, handleMax : handleYMax, handleStep : handleYStep} = useGraphScaleUpdate(setYRange);
