@@ -1,0 +1,35 @@
+@import "../../scss/base.scss";
+
+#mainToolbar {
+  grid-column: 1/1;
+}
+
+.toolbarBtnWrap{
+  background-color: #ecf0f1;
+  height: 100%;
+  width: 55%;
+    @include center-all;
+  flex-direction: column;
+}
+
+.toolBtn {
+  width: 3em;
+  height: 3em;
+  margin: 5px;
+  background-color: $primary-color;
+  color: #ecf0f1;
+}
+
+.toolBtn:hover {
+  background-color: #ecf0f1;
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.my-color-pickers {
+  width: 100%;
+  margin-top: 2em;
+  @include center-h;
+  position: relative;
+}
+ 

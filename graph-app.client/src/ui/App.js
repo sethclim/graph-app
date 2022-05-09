@@ -17,8 +17,8 @@ function App() {
           <Switch>
             <Route path={'/login'} component={Login} />
             <Route path={'/signup'} component={Signup} />
-            <Route path={'/saved'} component={SavedGraphs} />
-            <AuthorizeRoute path={'/home'} component={Home} redirectPath="/login" exact/>
+            <AuthorizeRoute path={'/saved'} component={SavedGraphs} redirectPath="/login" exact/>
+            <Route path={'/'} component={Home} />
           </Switch>
         </BrowserRouter>
       </Providers>

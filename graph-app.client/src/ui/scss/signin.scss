@@ -1,5 +1,8 @@
-@import "base.scss";
+@import "./base.scss";
 
+$secondary: #38ef7d;
+$white: #fff;
+$gray: #9b9b9b;
 
 .signinPage{
   @include center-all;
@@ -12,10 +15,6 @@
     flex-direction: column;
 }
 
-
-$secondary: #38ef7d;
-$white: #fff;
-$gray: #9b9b9b;
 .form__group {
   position: relative;
   padding: 15px 0 0;
@@ -31,7 +30,7 @@ $gray: #9b9b9b;
   border-bottom: 2px solid $gray;
   outline: 0;
   font-size: 1.3rem;
-  color: $white;
+  color: black;
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
@@ -105,20 +104,21 @@ $gray: #9b9b9b;
 }	
 
 .button{
-&::after{
-    	transition: background-color .2s ease;
-		position: absolute;
-		content: '';
-		height: 4px;
-		bottom: 0;
-		width: 100%;
-		background-color: darken($primary-color, 50%);
-		opacity: .18;
-		border-bottom-left-radius: 2px;
-		border-bottom-right-radius: 2px;
-		left: 0;
-}
-	
+
+  &::after{
+        transition: background-color .2s ease;
+      position: absolute;
+      content: '';
+      height: 4px;
+      bottom: 0;
+      width: 100%;
+      background-color: darken($primary-color, 50%);
+      opacity: .18;
+      border-bottom-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+      left: 0;
+  }
+    
 	&:focus, &:hover{
         text-decoration: none;
 		color: #fff;

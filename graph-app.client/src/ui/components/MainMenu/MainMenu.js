@@ -42,6 +42,16 @@ const MainMenu = () => {
               </Link>
             )}
           </Menu.Item>
+          <Menu.Item className={styles.item}>
+            {({ active }) => (
+              <Link
+                className={`${active && 'bg-blue-500'}`}
+                to="/"
+              >
+                Logout
+              </Link>
+            )}
+          </Menu.Item>
         </Menu.Items>
         </Transition>
       </Menu>

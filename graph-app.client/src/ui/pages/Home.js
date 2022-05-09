@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import "../scss/base.scss";
 import "../scss/toplevel.scss";
 import Graph from "../components/Graph";
-import MainToolbar from "../components/MainToolbar";
+import MainToolbar from "../components/MainToolbar/MainToolbar";
 import GraphControls from "../components/GraphControls";
 import CogButton from "../components/CogButton";
 import { useState } from "react";
