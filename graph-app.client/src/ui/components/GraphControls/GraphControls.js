@@ -7,13 +7,13 @@ import { AuthContext } from "../../../domain/providers/AuthProvider";
 import { useGraphScaleUpdate } from "../../../domain/hooks/useGraphScaleUpdate";
 import { jsPDF } from "jspdf";
 
-import {graphControls,controlRow } from "./graph-controls.module.scss";
+import {graphControls,controlRow, center, rowHeader } from "./graph-controls.module.scss";
 
 
 const GraphControls = () => {
 
   const { user }                                = useContext(AuthContext)
-  const {setXRange, setYRange, xRange, yRange, dimensions, setDimensions} = useContext(GraphContext);
+  const {setXRange, setYRange, xRange, yRange } = useContext(GraphContext);
   const {points,linePoints,dots}                = useContext(InputContext);
 
   const {send } = usePost(EndPoints.insertGraph);
@@ -63,27 +63,42 @@ const GraphControls = () => {
   return (
     <div id={graphControls}>
         <h3>Set Scale</h3>    
-        <label className="row-header">X Range</label>
+        <h4 className={rowHeader}>X Range</h4>
         <div className={controlRow}>
+          <p>Min</p>
           <input type="text" placeholder={xRange.XMin}  onChange={(event) => handleXMin(event.target.value) } />
           <p> - </p>
+          <p>Max</p>
           <input type="text" placeholder={xRange.XMax}  onChange={(event) => handleXMax(event.target.value)} />
-          <label>Step</label>
+
+        </div>
+        <div className={controlRow}>
+        <label>Step</label>
           <input type="text" placeholder={xRange.XStep} onChange={(event) => handleXStep(event.target.value)} />
         </div>
-        <label>Y Range</label>
+        <h4 className={rowHeader}>Y Range</h4>
         <div className={controlRow}>
+            <p>Min</p>
             <input type="text" placeholder ={yRange.YMin}  onChange={(event) => handleYMin(event.target.value)} />
             <p> - </p>
+            <p>Max</p>
             <input type="text" placeholder ={yRange.YMax}  onChange={(event) => handleYMax(event.target.value)} />
+        </div>
+        <div className={controlRow}>
             <label>Step</label>
             <input type="text" placeholder ={yRange.YStep} onChange={(event) => handleYStep(event.target.value)} />
         </div>
+        <br></br>
+        <h3>Save Graph</h3>
         <div className={controlRow}>
-          <button onClick={()=> handleSave()}>Save</button>
+          <div className={center}>
+               <button onClick={()=> handleSave()}>Save</button>
+          </div>
         </div>
         <div className={controlRow}>
-          <button onClick={()=> handleDownload()}>Download</button>
+          <div className={center}>
+            <button onClick={()=> handleDownload()}>Download</button>
+          </div>
         </div>
     </div>
   );

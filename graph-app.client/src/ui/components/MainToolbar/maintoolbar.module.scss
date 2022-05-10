@@ -8,7 +8,8 @@
   background-color: #ecf0f1;
   height: 100%;
   width: 55%;
-    @include center-all;
+  min-width: 7em;
+  @include center-all;
   flex-direction: column;
 }
 

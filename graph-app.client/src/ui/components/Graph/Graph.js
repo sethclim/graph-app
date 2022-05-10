@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, useContext } from "react";
+import { useLayoutEffect, useRef, useContext } from "react";
 import { GraphHelper } from "../../../domain/models/GraphHelper";
 import { InputContext } from "../../../domain/providers/InputProvider";
 import { GraphContext } from "../../../domain/providers/GraphProvider";
@@ -10,7 +10,6 @@ import {graphWrapper, graph, backgroundLayer, drawLayer } from "./graph.module.s
 const Graph = () => {
   const graphRef = useRef();
 
-  // const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const { xRange,yRange, dimensions, setDimensions} = useContext(GraphContext);
 
   const {
@@ -25,10 +24,6 @@ const Graph = () => {
     setRedraw,
     color
   } = useContext(InputContext);
-
-  console.log("DIm " + dimensions)
-
-
 
   const drawGridLines = (ctx) =>{
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
