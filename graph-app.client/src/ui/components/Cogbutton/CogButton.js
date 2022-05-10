@@ -1,9 +1,9 @@
-import "../scss/components/cogbutton.scss";
+import {cogButton} from "./cogbutton.module.scss";
 
 const CogButton = ({onClick}) =>{
 
     return(
-        <div className="CogButton">
+        <div className={cogButton}>
             <svg 
                 aria-hidden="true" 
                 focusable="false" 

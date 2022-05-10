@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback, useState } from "react";
-import { PenOptions } from "../../domain/models/PenOptions";
+import { PenOptions } from "../../../domain/models/PenOptions";
 
 const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLinePoints, dots, setDots, redraw, setRedraw,color,...rest}) => {
 

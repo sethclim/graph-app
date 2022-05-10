@@ -1,6 +1,6 @@
-@import "base.scss";
+@import "../../scss/base.scss";
 
-.graph-wrapper {
+.graphWrapper {
   grid-column: 4/11;
   @include center-all;
 }
@@ -19,14 +19,26 @@ canvas {
   right: 0;
 }
 
-#background-layer {
+#backgroundLayer {
   z-index: 1;
+
+  canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }
 
-#foreground-layer {
+#foregroundLayer {
   z-index: 2;
 }
 
-#draw-layer {
+#drawLayer {
   z-index: 3;
+
+  canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }

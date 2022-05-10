@@ -1,13 +1,14 @@
 import { useLayoutEffect, useRef, useState, useContext } from "react";
-import Canvas from "./Canvas";
+import Canvas from "../Canvas/Canvas";
 
 //import { Point } from "../models/point";
-import { GraphHelper } from "../../domain/models/GraphHelper";
-import DrawCanvas from "./DrawCanvas";
+import { GraphHelper } from "../../../domain/models/GraphHelper";
+import DrawCanvas from "../Canvas/DrawCanvas";
 
-import "../scss/graph.scss";
-import { InputContext } from "../../domain/providers/InputProvider";
-import { GraphContext } from "../../domain/providers/GraphProvider";
+import { InputContext } from "../../../domain/providers/InputProvider";
+import { GraphContext } from "../../../domain/providers/GraphProvider";
+
+import {graphWrapper, graph, backgroundLayer, foregroundLayer, drawLayer } from "./graph.module.scss";
 
 const Graph = () => {
   const graphRef = useRef();
@@ -120,11 +121,11 @@ const Graph = () => {
   } = useContext(InputContext);
 
   return (
-    <div className="graph-wrapper">
-      <div id="graph" ref={graphRef}>
+    <div className={graphWrapper}>
+      <div id={graph} ref={graphRef}>
         <DrawCanvas
           pen={penSelection}
-          id="draw-layer"
+          id={drawLayer}
           width={dimensions.width}
           height={dimensions.height}
           dots={dots}
@@ -138,7 +139,7 @@ const Graph = () => {
           color={color}
         />
         <Canvas
-          id="background-layer"
+          id={backgroundLayer}
           draw={draw_LayerTwo}
           width={dimensions.width}
           height={dimensions.height}

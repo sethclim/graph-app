@@ -1,16 +1,13 @@
-@import "base.scss";
+@import "../../scss/base.scss";
 
-#graph-controls {
+#graphControls {
   grid-column: 12/13;
   background-color: #ecf0f1;
   padding: 5px;
   padding-top: 25px;
-
-  .row-header {
-  }
 }
 
-.control-row {
+.controlRow {
   @include center-v;
   flex-direction: row;
 
