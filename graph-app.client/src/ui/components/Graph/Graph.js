@@ -1,20 +1,34 @@
 import { useLayoutEffect, useRef, useState, useContext } from "react";
-import Canvas from "../Canvas/Canvas";
-
-//import { Point } from "../models/point";
 import { GraphHelper } from "../../../domain/models/GraphHelper";
-import DrawCanvas from "../Canvas/DrawCanvas";
-
 import { InputContext } from "../../../domain/providers/InputProvider";
 import { GraphContext } from "../../../domain/providers/GraphProvider";
+import DrawCanvas from "../Canvas/DrawCanvas";
+import Canvas from "../Canvas/Canvas";
 
-import {graphWrapper, graph, backgroundLayer, foregroundLayer, drawLayer } from "./graph.module.scss";
+import {graphWrapper, graph, backgroundLayer, drawLayer } from "./graph.module.scss";
 
 const Graph = () => {
   const graphRef = useRef();
 
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const { xRange,yRange} = useContext(GraphContext);
+  // const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const { xRange,yRange, dimensions, setDimensions} = useContext(GraphContext);
+
+  const {
+    penSelection,
+    points,
+    setPoints,
+    linePoints,
+    setLinePoints,
+    dots,
+    setDots,
+    redraw,
+    setRedraw,
+    color
+  } = useContext(InputContext);
+
+  console.log("DIm " + dimensions)
+
+
 
   const drawGridLines = (ctx) =>{
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -107,18 +121,6 @@ const Graph = () => {
     window.addEventListener("resize", handleResize);
   }, []);
 
-  const {
-    penSelection,
-    points,
-    setPoints,
-    linePoints,
-    setLinePoints,
-    dots,
-    setDots,
-    redraw,
-    setRedraw,
-    color
-  } = useContext(InputContext);
 
   return (
     <div className={graphWrapper}>

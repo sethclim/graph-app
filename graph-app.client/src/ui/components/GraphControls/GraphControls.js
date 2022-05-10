@@ -5,13 +5,15 @@ import { usePost } from "../../../domain/hooks/usePost"
 import { EndPoints } from "../../../domain/constants/EndPoints";
 import { AuthContext } from "../../../domain/providers/AuthProvider";
 import { useGraphScaleUpdate } from "../../../domain/hooks/useGraphScaleUpdate";
+import { jsPDF } from "jspdf";
 
 import {graphControls,controlRow } from "./graph-controls.module.scss";
+
 
 const GraphControls = () => {
 
   const { user }                                = useContext(AuthContext)
-  const {setXRange, setYRange, xRange, yRange,} = useContext(GraphContext);
+  const {setXRange, setYRange, xRange, yRange, dimensions, setDimensions} = useContext(GraphContext);
   const {points,linePoints,dots}                = useContext(InputContext);
 
   const {send } = usePost(EndPoints.insertGraph);
@@ -39,6 +41,25 @@ const GraphControls = () => {
     await send(graphData);
   }
 
+  const handleDownload = () => {
+    var bk_canvas = document.getElementById('graph_backgroundLayer__2hAx3');
+    var canvas = document.getElementById('graph_drawLayer__11e4q');
+
+    if(canvas){
+      var imgData = canvas.toDataURL("image/png", 1.0);
+      var imgbkData = bk_canvas.toDataURL("image/png", 1.0);
+      var pdf = new jsPDF();
+
+      pdf.addImage(imgbkData, 'JPEG', 5, 5);
+      pdf.addImage(imgData, 'JPEG', 5, 5);
+      pdf.save("graph.pdf");
+    }
+    else{
+      console.log("No canvas")
+    }
+ 
+  }
+
   return (
     <div id={graphControls}>
         <h3>Set Scale</h3>    
@@ -60,6 +81,9 @@ const GraphControls = () => {
         </div>
         <div className={controlRow}>
           <button onClick={()=> handleSave()}>Save</button>
+        </div>
+        <div className={controlRow}>
+          <button onClick={()=> handleDownload()}>Download</button>
         </div>
     </div>
   );
