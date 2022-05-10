@@ -27,6 +27,7 @@ namespace CoreWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.Configure<DatabaseSettings>(Configuration.GetSection("MongoConnection"));
             services.AddSingleton<MongoContext>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -56,7 +57,7 @@ namespace CoreWebApi
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoreWebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphAppServer", Version = "v1" });
             });
         }
 
@@ -67,7 +68,7 @@ namespace CoreWebApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoreWebApi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GraphAppServer v1"));
             }
 
             app.UseHttpsRedirection();

@@ -1,8 +1,7 @@
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-
-
+using System.Diagnostics;
 using Microsoft.Extensions.Options;
 
 namespace CoreWebApi.Data
@@ -15,7 +14,9 @@ namespace CoreWebApi.Data
         public MongoContext(IOptions<DatabaseSettings> dbOptions)
         {
             var settings = dbOptions.Value;
-            _client = new MongoClient(settings.ConnectionString);
+            var conn = Environment.GetEnvironmentVariable("MONGODB_CONNSTRING");
+            Debug.WriteLine("Conn " + conn);
+            _client = new MongoClient(conn);
             _database = _client.GetDatabase(settings.DatabaseName);
         }
 
