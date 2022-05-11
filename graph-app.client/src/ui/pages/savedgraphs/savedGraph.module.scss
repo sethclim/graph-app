@@ -1,0 +1,47 @@
+@import "../../scss/base.scss";
+
+.gridWrap{
+    min-height: 90vh;
+    @include center-v;
+    flex-direction: column;
+    padding-top: 5em;
+    
+}          
+
+.titleWrap{
+    width: 80vw;
+    height: 10em;
+    h3{
+        font-size: 5em;
+        align-self: flex-start;
+    }
+}
+
+.grid{
+    display: grid;
+    width: 80vw;
+    height: 100%;
+    grid-template-columns: 20em 20em 20em 20em;
+}
+
+.gridItem{
+    background-color: $primary-color;
+    height: 20em;
+    width: 20em;
+    color: white;
+
+    box-shadow: 0 4px 8px 0 rgba(34, 34, 34, 0.2),
+    0 6px 20px 0 rgba(50, 49, 49, 0.19);
+
+    div{
+        padding: 10px;
+        p{
+            text-decoration: none;
+        }
+    }
+}
+
+.gridItem:hover{
+    cursor: pointer;
+    background-color: lighten($primary-color, 25%);
+}
