@@ -4,8 +4,8 @@ import { Point } from "../models/Point";
 import { Range } from "../models/Range";
 
 interface GraphContextInterface {
-  setXRange : Function,
-  setYRange  : Function,
+  setXRange : (range: Range) => any,
+  setYRange  : (range: Range) => any,
   setOrigin : Function,
   xRange : Range,
   yRange : Range,
@@ -14,8 +14,21 @@ interface GraphContextInterface {
   setDimensions : Function
 }
 
+const defaultGraphContext = {
+  setXRange : () => null,
+  setYRange : () => null,
+  setOrigin : () => null,
+  xRange : new Range(-7,-4,1),
+  yRange : new Range(-7,-4,1),
+  origin : new Point(0,0),
+  dimensions : new Dimension(0,0),
+  setDimensions : () => null
+}
 
-export const GraphContext = createContext<GraphContextInterface | null>(null);
+
+
+
+export const GraphContext = createContext<GraphContextInterface>(defaultGraphContext);
 
 export const GraphProvider = (props : any) => {
   const [xRange, setXRange] = useState(new Range(-5,5,1));
