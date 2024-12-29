@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../domain/providers/AuthProvider";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Layout from "../components/utility/Layout";
 import "../scss/signin.scss";
 
 
 const Signup = ()=>{
     const {signup, signupSuccess} = useContext(AuthContext)
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -16,7 +16,7 @@ const Signup = ()=>{
 
     useEffect(()=>{
         if(signupSuccess)
-            history.push("/login")
+            navigate("/login")
     },[signupSuccess, history])
 
     const submit = () => {

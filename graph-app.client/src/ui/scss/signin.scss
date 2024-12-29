@@ -1,17 +1,18 @@
-@import "./base.scss";
+@use "./base.scss";
+@use 'sass:color';
 
 $secondary: #38ef7d;
 $white: #fff;
 $gray: #9b9b9b;
 
 .signinPage{
-  @include center-all;
+  @include base.center-all;
 }
 
 .signinWrap{
     width: 50%;
     height: 90vh;
-    @include center-all;
+    @include base.center-all;
     flex-direction: column;
 }
 
@@ -62,13 +63,13 @@ $gray: #9b9b9b;
     display: block;
     transition: 0.2s;
     font-size: 1rem;
-    color: $primary-color;
+    color: base.$primary-color;
     font-weight:700;    
   }
   padding-bottom: 6px;  
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, $primary-color,$secondary);
+  border-image: linear-gradient(to right, base.$primary-color, $secondary);
   border-image-slice: 1;
 }
 /* reset input */
@@ -88,7 +89,7 @@ $gray: #9b9b9b;
 	border: none;
 	color: #fff;
 	text-decoration: none;
-	background-color: $primary-color;
+	background-color: base.$primary-color;
 	padding: 15px 45px;
 	font-size: 13px;
 	text-transform: uppercase;
@@ -112,7 +113,7 @@ $gray: #9b9b9b;
       height: 4px;
       bottom: 0;
       width: 100%;
-      background-color: darken($primary-color, 50%);
+      background-color: color.adjust(base.$primary-color, $lightness: -50%, $space: hsl);
       opacity: .18;
       border-bottom-left-radius: 2px;
       border-bottom-right-radius: 2px;
@@ -125,11 +126,11 @@ $gray: #9b9b9b;
     }
 		
 	&:hover{
-        background-color: lighten($primary-color, 5%);
+        background-color: color.adjust(base.$primary-color, $lightness: 5%, $space: hsl);
     }
     &::after{opacity: .22}
 	&:active{
-        background-color: darken($primary-color, 5%)
+        background-color: color.adjust(base.$primary-color,  $lightness: -5%, $space: hsl)
     }
     &::after{
         opacity: .32

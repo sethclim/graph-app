@@ -1,4 +1,4 @@
-@import "../../scss/base.scss";
+@use "../../scss/base.scss";
 
 #mainToolbar {
   grid-column: 1/1;
@@ -9,7 +9,7 @@
   height: 100%;
   width: 55%;
   min-width: 7em;
-  @include center-all;
+  @include base.center-all;
   flex-direction: column;
 }
 
@@ -17,20 +17,20 @@
   width: 3em;
   height: 3em;
   margin: 5px;
-  background-color: $primary-color;
+  background-color: base.$primary-color;
   color: #ecf0f1;
 }
 
 .toolBtn:hover {
   background-color: #ecf0f1;
-  color: $primary-color;
+  color: base.$primary-color;
   cursor: pointer;
 }
 
 .my-color-pickers {
   width: 100%;
   margin-top: 2em;
-  @include center-h;
+  @include base.center-h;
   position: relative;
 }
  

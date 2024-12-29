@@ -1,8 +1,9 @@
-@import "../../scss/base.scss";
+@use "../../scss/base.scss";
+@use "sass:color";
 
 .gridWrap{
     min-height: 90vh;
-    @include center-v;
+    @include base.center-v;
     flex-direction: column;
     padding-top: 5em;
     
@@ -25,7 +26,7 @@
 }
 
 .gridItem{
-    background-color: $primary-color;
+    background-color: base.$primary-color;
     height: 20em;
     width: 20em;
     color: white;
@@ -43,5 +44,5 @@
 
 .gridItem:hover{
     cursor: pointer;
-    background-color: lighten($primary-color, 25%);
+    background-color: color.adjust(base.$primary-color, $lightness: 25%, $space: hsl);
 }

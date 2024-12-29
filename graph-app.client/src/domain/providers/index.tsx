@@ -3,7 +3,7 @@ import AuthProvider from "./AuthProvider"
 import { InputProvider } from "./InputProvider"
 import { GraphProvider } from "./GraphProvider"
 
-const Providers = ({children}) =>{
+const Providers = ({children} : any) =>{
 
     return(
         <AuthProvider>

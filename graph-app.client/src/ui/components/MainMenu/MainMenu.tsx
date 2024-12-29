@@ -1,15 +1,17 @@
 import { Menu, Transition } from '@headlessui/react'
-import { MenuIcon } from '@heroicons/react/solid'
-import { Fragment } from 'react'
-import styles from "./MainMenu.module.scss"
-import { Link } from 'react-router-dom';
+// import { Bars3Icon } from '@heroicons/react/24/solid'
+// import { Fragment } from 'react'
+// import styles from "./MainMenu.module.scss"
+// import { Link } from 'react-router-dom';
+
 
 
 const MainMenu = () => {
     return (
-      <Menu as="div" className={styles.menu}>
-        <Menu.Button className={styles.menuButton}>
-          <MenuIcon className={styles.menuSvg} />
+      // <Menu as="div" className={styles.menu}>
+      <Menu as="div">
+        {/* <Menu.Button className={styles.menuButton}>
+          <Bars3Icon className={styles.menuSvg} />
         </Menu.Button>    
         <Transition
             as={Fragment}
@@ -53,7 +55,7 @@ const MainMenu = () => {
             )}
           </Menu.Item>
         </Menu.Items>
-        </Transition>
+        </Transition> */}
       </Menu>
     )
   }
