@@ -1,14 +1,15 @@
 import { createContext, PropsWithChildren, useState } from "react";
 import { PenOptions } from "../models/PenOptions";
+import { Point } from "../models/Point";
 
 export interface IInputContext {
   penSelection : PenOptions,
   setPenSelection : Function,
-  points : Number[],
+  points : number[],
   setPoints : Function,
-  linePoints : Number[],
+  linePoints : number[],
   setLinePoints : Function,
-  dots : Number[],
+  dots : Point[],
   setDots : Function,
   redraw : boolean,
   setRedraw : Function,
@@ -37,7 +38,7 @@ export const InputContext = createContext<IInputContext>(defaultInputContext);
 
 export const InputProvider = (props : PropsWithChildren<any>) => {
   const [penSelection, setPenSelection] = useState(PenOptions.pen);
-  const [points, setPoints] = useState<Number []>([]);
+  const [points, setPoints] = useState<number []>([]);
   const [linePoints, setLinePoints] = useState([]);
   const [dots, setDots] = useState([]);
   const [redraw, setRedraw] = useState(false);

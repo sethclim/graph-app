@@ -2,14 +2,14 @@ import { useEffect, useRef } from "react";
 
 const Canvas = (props : any) => {
   const { draw, onMyMouseMove, onMyMouseUp, width, height, ...rest } = props;
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  function resizeCanvasToDisplaySize(h, w, canvas) {
+  function resizeCanvasToDisplaySize(h : number, w : number, canvas : HTMLCanvasElement) {
     const { width, height } = canvas.getBoundingClientRect();
 
     if (w !== width || h !== height) {
       canvas.width = w;
-      canvas.height = h;
+      canvas.height = h;              
       return true;
     }
 
@@ -18,13 +18,17 @@ const Canvas = (props : any) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+
+    if (canvas === null)
+      return
+
     const context = canvas.getContext("2d");
 
-    canvas.addEventListener("mousemove", (event) => {
+    canvas.addEventListener("mousemove", (event : MouseEvent) => {
       if (onMyMouseMove) onMyMouseMove(event);
     });
 
-    window.addEventListener("mouseup", (event) => {
+    window.addEventListener("mouseup", (event : MouseEvent) => {
       if (onMyMouseUp) onMyMouseUp(event);
     });
 
