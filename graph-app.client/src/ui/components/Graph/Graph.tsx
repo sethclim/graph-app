@@ -123,28 +123,28 @@ const Graph = () => {
     <div className={styles.graphWrapper}>
       <div id={styles.graph} ref={graphRef}>
         <DrawCanvas
-          pen={penSelection}
-          id={styles.drawLayer}
-          width={dimensions.width}
-          height={dimensions.height}
-          dots={dots}
-          setDots={setDots}
-          points={points}
-          setPoints={setPoints}
-          linePoints={linePoints}
-          setLinePoints={setLinePoints}
-          redraw={redraw}
-          setRedraw={setRedraw}
-          color={color}
-        />
+           pen={penSelection}
+           id={styles.drawLayer}
+           width={dimensions.width}
+           height={dimensions.height}
+           dots={dots}
+           setDots={setDots}
+           points={points}
+           setPoints={setPoints}
+           linePoints={linePoints}
+           setLinePoints={setLinePoints}
+           redraw={redraw}
+           setRedraw={setRedraw}
+           color={color}
+         />
         <Canvas
           id={styles.backgroundLayer}
           draw={draw_LayerTwo}
           width={dimensions.width}
           height={dimensions.height}
         />
-      </div>
-    </div>
+       </div>
+   </div>
   );
 };
 

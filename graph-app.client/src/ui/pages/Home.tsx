@@ -49,7 +49,6 @@ const Home = () =>{
                 <MainToolbar />
                 <Graph />
                 <CogButton onClick={handleControls}  />
-
                 {
                     controls?   <GraphControls /> : null
                 }
