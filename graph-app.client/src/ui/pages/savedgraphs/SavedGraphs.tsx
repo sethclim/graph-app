@@ -46,7 +46,7 @@ const GraphItem = ({graph, idx} : GraphItemProps) => {
             className={styles.gridItem}
             to={{
                 pathname: "/home",
-                state: { fromSavedGraph: idx }
+                search: `?saved-graph=${idx}`
             }}
          >
             <div>

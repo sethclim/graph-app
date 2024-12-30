@@ -5,9 +5,9 @@ import { Point } from "../models/Point";
 export interface IInputContext {
   penSelection : PenOptions,
   setPenSelection : Function,
-  points : number[],
+  points : Array<Array<Point>>,
   setPoints : Function,
-  linePoints : number[],
+  linePoints : Array<Array<Point>>,
   setLinePoints : Function,
   dots : Point[],
   setDots : Function,
@@ -38,9 +38,9 @@ export const InputContext = createContext<IInputContext>(defaultInputContext);
 
 export const InputProvider = (props : PropsWithChildren<any>) => {
   const [penSelection, setPenSelection] = useState(PenOptions.pen);
-  const [points, setPoints] = useState<number []>([]);
-  const [linePoints, setLinePoints] = useState([]);
-  const [dots, setDots] = useState([]);
+  const [points, setPoints] = useState<Array<Array<Point>>>([]);
+  const [linePoints, setLinePoints] = useState<Array<Array<Point>>>([]);
+  const [dots, setDots] = useState<Point[]>([]);
   const [redraw, setRedraw] = useState(false);
   const [color, setColor] = useState("#EB144C");
 

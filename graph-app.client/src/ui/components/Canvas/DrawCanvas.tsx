@@ -15,7 +15,8 @@ type DrawCanvasProps = {
   setDots : Function,
   redraw : boolean,
   setRedraw : Function,
-  color : string
+  color : string,
+  id: CSSModuleClasses[string]
 }
 
 
@@ -368,6 +369,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     };
   },[isDrawing, points, setPoints])
 
+  //Add actual ID here?
   return <canvas id="drawCanvas" ref={canvasRef} />;
 };
 
