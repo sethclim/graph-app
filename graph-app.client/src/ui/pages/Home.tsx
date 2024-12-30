@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+// import { useContext, useEffect } from "react";
 import "../scss/base.scss";
 import "../scss/toplevel.scss";
 import Graph from "../components/Graph/Graph";
@@ -6,17 +6,17 @@ import MainToolbar from "../components/MainToolbar/MainToolbar";
 import GraphControls from "../components/GraphControls/GraphControls";
 import CogButton from "../components/Cogbutton/CogButton";
 import { useState } from "react";
-import { AuthContext } from "../../domain/providers/AuthProvider";
-import { InputContext } from "../../domain/providers/InputProvider";
+// import { AuthContext } from "../../domain/providers/AuthProvider";
+// import { InputContext } from "../../domain/providers/InputProvider";
 import Layout from "../components/utility/Layout";
 
 
 const Home = () =>{
-    const [controls, setControls] = useState()
-    const [graphIndex, setGraphIndex] = useState(null) 
+    const [controls, setControls] = useState<boolean>(false)
+    // const [graphIndex, setGraphIndex] = useState(null) 
     
-    const { user } = useContext(AuthContext)
-    const { loadGraph } = useContext(InputContext);
+    // const { user } = useContext(AuthContext)
+    // const { loadGraph } = useContext(InputContext);
 
 
     const handleControls = () =>{
@@ -32,15 +32,15 @@ const Home = () =>{
     // },[location.state])
 
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        if(graphIndex === undefined || graphIndex === null || user == null || user.graphs === undefined || user.graphs === null )
-            return
+    //     if(graphIndex === undefined || graphIndex === null || user == null || user.graphs === undefined || user.graphs === null )
+    //         return
 
-        const graph = user.graphs[graphIndex]
-        loadGraph(graph)
+    //     const graph = user.graphs[graphIndex]
+    //     loadGraph(graph)
 
-    },[graphIndex, user])
+    // },[graphIndex, user])
     
     
     return(
@@ -49,7 +49,6 @@ const Home = () =>{
                 <MainToolbar />
                 <Graph />
                 <CogButton onClick={handleControls}  />
-
                 {
                     controls?   <GraphControls /> : null
                 }

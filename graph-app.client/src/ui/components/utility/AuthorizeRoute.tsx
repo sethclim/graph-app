@@ -1,10 +1,14 @@
 
-import  { useContext } from 'react'
+import  { PropsWithChildren, useContext } from 'react'
 import { Navigate  } from 'react-router-dom'
 
 import { AuthContext } from '../../../domain/providers/AuthProvider'
 
-const AuthorizeRoute = ({ children, redirectPath = "/", ...rest }) => {
+type IAuthorizeRouteProps = {
+    redirectPath : string
+}
+
+const AuthorizeRoute = ({ children, redirectPath = "/"} : PropsWithChildren<IAuthorizeRouteProps>) => {
 
     const { authenticated } = useContext(AuthContext)
 

@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { PenOptions } from "../../../domain/models/PenOptions";
 import { InputContext } from "../../../domain/providers/InputProvider";
 
-import { mainToolbar, toolbarBtnWrap, toolBtn } from "./maintoolbar.module.scss";
+import styles from "./maintoolbar.module.scss";
 
 const MainToolbar = () => {
-  const { setPenSelection, setDots, setLinePoints, setRedraw, setPoints, color, setColor } = useContext(
+  const { setPenSelection, setDots, setLinePoints, setRedraw, setPoints } = useContext(
     InputContext
   );
 
@@ -16,25 +16,25 @@ const MainToolbar = () => {
     setRedraw(true);
   }
 
-  const handleChangeComplete = (color, event) => {
-    console.log("This is color " + color)
-    setColor(color)
-  };
+  // const handleChangeComplete = (color, event) => {
+  //   console.log("This is color " + color)
+  //   setColor(color)
+  // };
 
   return (
-    <div id={mainToolbar}>
-      <div className={toolbarBtnWrap} >
-        <button className={toolBtn} onClick={() => setPenSelection(PenOptions.pen)}>
+    <div id={styles.mainToolbar}>
+      <div className={styles.toolbarBtnWrap} >
+        <button className={styles.toolBtn} onClick={() => setPenSelection(PenOptions.pen)}>
           Pen
         </button>
-        <button className={toolBtn} onClick={() => setPenSelection(PenOptions.line)}>
+        <button className={styles.toolBtn} onClick={() => setPenSelection(PenOptions.line)}>
           Line
         </button>
-        <button className={toolBtn} onClick={() => setPenSelection(PenOptions.dot)}>
+        <button className={styles.toolBtn} onClick={() => setPenSelection(PenOptions.dot)}>
           Dot
         </button>
         {/* <button className="toolbtn">Eraser</button> */}
-        <button className={toolBtn} onClick={() => handleClear()}>
+        <button className={styles.toolBtn} onClick={() => handleClear()}>
           Clear
         </button>
         <div className="my-color-pickers">

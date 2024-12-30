@@ -1,4 +1,4 @@
-import { Menu, Transition } from '@headlessui/react'
+import { Menu } from '@headlessui/react'
 // import { Bars3Icon } from '@heroicons/react/24/solid'
 // import { Fragment } from 'react'
 // import styles from "./MainMenu.module.scss"

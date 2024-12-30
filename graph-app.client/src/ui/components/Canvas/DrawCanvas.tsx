@@ -1,16 +1,34 @@
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback, useState, MouseEvent } from "react";
 import { PenOptions } from "../../../domain/models/PenOptions";
+import { Dimension } from "../../../domain/models/Dimension";
+import { Point } from "../../../domain/models/Point";
 
-const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLinePoints, dots, setDots, redraw, setRedraw,color,...rest}) => {
+type DrawCanvasProps = {
+  pen : PenOptions, 
+  width : number,
+  height : number, 
+  points : Array<Array<Point>>,
+  setPoints : Function,
+  linePoints : Array<Array<Point>>,
+  setLinePoints : Function,
+  dots : Array<Point>,
+  setDots : Function,
+  redraw : boolean,
+  setRedraw : Function,
+  color : string,
+  id: CSSModuleClasses[string]
+}
 
-  const canvasRef = useRef(null);
+const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLinePoints, dots, setDots, redraw, setRedraw, color, id} : DrawCanvasProps) => {
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const dotsRef = useRef(dots)
   const pointsRef = useRef(points)
   const linePointsRef = useRef(linePoints)
 
   const [isDrawing, setIsDrawing] = useState(false)
   const [lineStarted, setLineStarted] = useState(false)
-  const [tempStart, setTempStart] = useState(null)
+  const [tempStart, setTempStart] = useState<Point | null>(null)
   
   useEffect(()=>{
     dotsRef.current = dots
@@ -24,7 +42,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     linePointsRef.current = linePoints
   },[linePoints])
 
-  const resizeCanvasToDisplaySize = useCallback((newWidth, newHeight, canvas) =>{
+  const resizeCanvasToDisplaySize = useCallback((newWidth : number, newHeight : number, canvas : HTMLCanvasElement) =>{
       const oldWidth = canvas.getBoundingClientRect().width;
       const oldHeight = canvas.getBoundingClientRect().height;
 
@@ -56,7 +74,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     }, [setDots,setPoints, width, height]
   )
 
-  const scaleDrawingOnResize = (data, oldDimensions, newDimensions) => {
+  const scaleDrawingOnResize = (data : Array<any>, oldDimensions : Dimension, newDimensions : Dimension) => {
     const scalerX = newDimensions.width / oldDimensions.width;
     const scalerY = newDimensions.height / oldDimensions.height;
 
@@ -69,7 +87,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     return newData;
   }
 
-  const reDrawLine = useCallback((context, points) => {
+  const reDrawLine = useCallback((context : any, points : Array<any>) => {
       context.strokeStyle = color;
       context.lineCap = "round";
       context.lineWidth = 5.0;
@@ -85,7 +103,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     },[color]
   )
 
-  const reDrawDot = useCallback((context, dots) => {
+  const reDrawDot = useCallback((context : any, dots : Array<any>) => {
       context.strokeStyle = color;
       context.lineCap = "round";
       context.lineWidth = 5.0;
@@ -103,7 +121,14 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
 
   const reDrawAll = useCallback(()=>{
       const canvas = canvasRef.current;
+
+      if(canvas === null)
+        return
+
       const context = canvas.getContext("2d");
+
+      if(context === null)
+        return
 
       context.clearRect(0, 0, context.canvas.width, context.canvas.height)
 
@@ -123,21 +148,24 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
   
   useEffect(() =>{
     const canvas = canvasRef.current;
-    resizeCanvasToDisplaySize(width, height, canvas);
-    
-    reDrawAll()
 
-  },[width, height, setRedraw, resizeCanvasToDisplaySize, reDrawAll])
+
+    if(canvas !== null)
+      resizeCanvasToDisplaySize(width, height, canvas);
+    
+    // reDrawAll()
+
+  },[width, height, setRedraw, resizeCanvasToDisplaySize])
 
   useEffect(()=>{
     if (redraw) {
-      reDrawAll()
+       reDrawAll()
     }
     setRedraw(false)
   },[redraw, reDrawAll,setRedraw])
 
-  //===================================================================
-  const drawDot = useCallback( (ctx,x,y) =>{
+  // //===================================================================
+  const drawDot = useCallback( (ctx : any, x : number, y : number) =>{
       ctx.strokeStyle = color;
       ctx.lineCap = "round";
       ctx.lineWidth = 5.0;
@@ -149,7 +177,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     },[color]
   )
 
-  const startLine = useCallback( (ctx, x ,y) =>{
+  const startLine = useCallback( (ctx : any, x : number, y : number) =>{
     console.log("Color " + color)
       ctx.strokeStyle = color;
       ctx.lineCap = "round";
@@ -159,12 +187,12 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     },[color]
   )
 
-  const drawLine = (ctx, x ,y) =>{
+  const drawLine = (ctx : any, x : number, y : number) =>{
     ctx.lineTo(x, y);
     ctx.stroke();
   }
 
-  const drawTempLine = (ctx, x1 ,y1, x2, y2) =>{
+  const drawTempLine = (ctx : any, x1 : number,y1 : number, x2 : number, y2 : number) =>{
     ctx.strokeStyle = "#808080";
     ctx.lineWidth = 2.5;
     ctx.beginPath();
@@ -174,76 +202,159 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
   }
 
   //===================================================================
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    const { left, top } = canvas.getBoundingClientRect();
+  // useEffect(() => {
+  //   console.log("Main use effect");
+  //   // if(canvas === null)
+  //   //   return
+    
+  //   const context = canvas?.getContext("2d");
+    
+  //   // if(context === null)
+  //   //   return
+    
+    
+  //   function mouseDown(e : MouseEvent) {
+  //     const canvas = canvasRef.current;
+  //     const { left, top } = canvas.getBoundingClientRect();
+  //     console.log("MOUSE MOUSE MOUSE " + JSON.stringify(e))
+  //     const currentX = e.clientX - left;
+  //     const currentY = e.clientY - top;
 
-    function mouseDown(e) {
-      const currentX = e.clientX - left;
-      const currentY = e.clientY - top;
+  //     switch(pen) {
+  //       case PenOptions.pen:
+  //         reDrawAll()
+  //         d_pen()
+  //         break;
+  //       case PenOptions.line:
+  //         d_line(context, currentX, currentY)
+  //         break;
+  //       case PenOptions.dot:
+  //         reDrawAll()
+  //         d_dot()
+  //         break;
+  //       default:
+  //         d_pen()
+  //     }
 
-      switch(pen) {
-        case PenOptions.pen:
-          reDrawAll()
-          d_pen()
-          break;
-        case PenOptions.line:
-          d_line(context, currentX, currentY)
-          break;
-        case PenOptions.dot:
-          reDrawAll()
-          d_dot()
-          break;
-        default:
-          d_pen()
-      }
+  //     function d_pen(){
+  //       let p = [...points]
+  //       p.push([{ x: currentX, y: currentY }])
+  //       setPoints(p)
+  //       startLine(context,currentX,currentY)
+  //       setIsDrawing(true)
+  //     }
 
-      function d_pen(){
-        let p = [...points]
-        p.push([{ x: currentX, y: currentY }])
-        setPoints(p)
-        startLine(context,currentX,currentY)
-        setIsDrawing(true)
-      }
+  //     function d_dot(){
+  //       let d = [...dots]
+  //       d.push({ x: currentX, y: currentY });
+  //       setDots(d)
+  //       drawDot(context, currentX,currentY)
+  //     }
 
-      function d_dot(){
-        let d = [...dots]
-        d.push({ x: currentX, y: currentY });
-        setDots(d)
-        drawDot(context, currentX,currentY)
-      }
-
-      function d_line(ctx, x, y){
-        let lp = [...linePoints]
+  //     function d_line(ctx : any, x : number, y : number){
+  //       let lp = [...linePoints]
         
 
-        if(!lineStarted)
-        {
-          lp.push([{ x: x, y: y }]);
-          setLinePoints(lp)
-          setLineStarted(true);
-          startLine(ctx, x,y)
-          setTempStart({x: x, y: y})
-        }
-        else
-        {
-          lp[lp.length - 1].push({ x: x, y: y });
-          setLinePoints(lp)
-          drawLine(ctx, x,y)
-          setLineStarted(false)
-          setTempStart(null)
-          reDrawAll();
-        }      
-      }
+  //       if(!lineStarted)
+  //       {
+  //         lp.push([{ x: x, y: y }]);
+  //         setLinePoints(lp)
+  //         setLineStarted(true);
+  //         startLine(ctx, x,y)
+  //         setTempStart({x: x, y: y})
+  //       }
+  //       else
+  //       {
+  //         lp[lp.length - 1].push({ x: x, y: y });
+  //         setLinePoints(lp)
+  //         drawLine(ctx, x,y)
+  //         setLineStarted(false)
+  //         setTempStart(null)
+  //         reDrawAll();
+  //       }      
+  //     }
+  //   }
+
+  //   console.log(canvas !== null)
+
+  //   canvas.addEventListener("mousedown", mouseDown);
+
+  //   return () => {
+  //     canvas?.removeEventListener("mousedown", mouseDown);
+  //   };
+  // }, [pen, dots, points,linePoints, setPoints, setDots, setLinePoints, lineStarted, reDrawAll, drawDot, startLine]);
+
+  function mouseDown(e: MouseEvent<HTMLCanvasElement>) {
+    const canvas = canvasRef.current;
+
+    if(canvas === null)
+      return
+
+    const context = canvas?.getContext("2d");
+
+    if(context === null)
+      return
+
+    const { left, top } = canvas.getBoundingClientRect();
+
+    const currentX = e.clientX - left;
+    const currentY = e.clientY - top;
+
+    switch(pen) {
+      case PenOptions.pen:
+        reDrawAll()
+        d_pen()
+        break;
+      case PenOptions.line:
+        d_line(context, currentX, currentY)
+        break;
+      case PenOptions.dot:
+        reDrawAll()
+        d_dot()
+        break;
+      default:
+        d_pen()
     }
 
-    canvas.addEventListener("mousedown", mouseDown);
+    function d_pen(){
+      let p = [...points]
+      p.push([{ x: currentX, y: currentY }])
+      setPoints(p)
+      startLine(context,currentX,currentY)
+      setIsDrawing(true)
+    }
 
-    return () => {
-      canvas.removeEventListener("mousedown", mouseDown);
-    };
-  }, [pen, dots, points,linePoints, setPoints, setDots, setLinePoints, lineStarted, reDrawAll, drawDot, startLine]);
+    function d_dot(){
+      let d = [...dots]
+      d.push({ x: currentX, y: currentY });
+      setDots(d)
+      drawDot(context, currentX,currentY)
+    }
+
+    function d_line(ctx : any, x : number, y : number){
+      let lp = [...linePoints]
+      
+
+      if(!lineStarted)
+      {
+        lp.push([{ x: x, y: y }]);
+        setLinePoints(lp)
+        setLineStarted(true);
+        startLine(ctx, x,y)
+        setTempStart({x: x, y: y})
+      }
+      else
+      {
+        lp[lp.length - 1].push({ x: x, y: y });
+        setLinePoints(lp)
+        drawLine(ctx, x,y)
+        setLineStarted(false)
+        setTempStart(null)
+        reDrawAll();
+      }      
+    }
+  }
+
 
   useEffect(()=>{
     const canvas = canvasRef.current;
@@ -255,7 +366,8 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     window.addEventListener("mouseup", mouseUp);
 
     return () => {
-      canvas.removeEventListener("mousemove", mouseUp);
+      if(canvas)
+        canvas.removeEventListener("mousemove", mouseUp);
     };
   },[])
 
@@ -265,10 +377,19 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     if(pen !== PenOptions.line){return}
 
     const canvas = canvasRef.current;
+
+    if(canvas === null)
+      return
+
     const context = canvas.getContext("2d");
+
+    
+    if(context === null)
+      return
+
     const { left, top } = canvas.getBoundingClientRect();
 
-    function mouseMove(e) {
+    function mouseMove(e : any) {
       const currentX = e.clientX - left;
       const currentY = e.clientY - top;
       //setTempEndPoint({ x: currentX, y: currentY })
@@ -285,6 +406,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     return () => {
       canvas.removeEventListener("mousemove", mouseMove);
     };
+
   },[pen, tempStart, reDrawAll])
 
 
@@ -293,10 +415,18 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     if (!isDrawing){ return }
 
     const canvas = canvasRef.current;
+
+    if(canvas === null)
+      return
+
     const context = canvas.getContext("2d");
+
+    if(context === null)
+      return
+    
     const { left, top } = canvas.getBoundingClientRect();
 
-    function mouseMove(e) {
+    function mouseMove(e: any) {
 
       const currentX = e.clientX - left;
       const currentY = e.clientY - top;
@@ -315,7 +445,8 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
     };
   },[isDrawing, points, setPoints])
 
-  return <canvas id="drawCanvas" ref={canvasRef} {...rest} />;
+  //Add actual ID here?
+  return <canvas id={id} ref={canvasRef} onMouseDown={mouseDown} />;
 };
 
 export default DrawCanvas;

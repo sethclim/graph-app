@@ -10,6 +10,7 @@ export interface IAuthContext   {
     signupSuccess : any
     authenticated: boolean,
     token: undefined,
+    setToken: Function
     user : any,
     reFetchUser : Function
 }
@@ -21,6 +22,7 @@ const defaultAuthContext = {
     signupSuccess : null,
     authenticated: false,
     token: undefined,
+    setToken  : () => null,
     user : null,
     reFetchUser  : () => null,
 }
@@ -33,7 +35,7 @@ const AuthProvider = (props : PropsWithChildren<any> )=> {
 
     const { send: login, success: loginSuccess } = usePost(EndPoints.login);
     const { send: signup, success: signupSuccess } = usePost(EndPoints.signup);
-    const { fetch, data: user, error } = useFetch(EndPoints.getUser);
+    const { fetch, data: user } = useFetch(EndPoints.getUser);
 
     const getUserCallBack = useCallback(() => {
         console.log("getUserCallBack")
@@ -64,6 +66,7 @@ const AuthProvider = (props : PropsWithChildren<any> )=> {
         signupSuccess,
         authenticated,
         token,
+        setToken,
         user,
         reFetchUser
     }

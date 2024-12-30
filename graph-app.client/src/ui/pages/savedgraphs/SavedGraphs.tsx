@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../../domain/providers/AuthProvider";
 import Layout from "../../components/utility/Layout"
 
-import {gridWrap, grid, titleWrap, gridItem, } from "./savedGraph.module.scss"
+import styles from "./savedGraph.module.scss"
 import { Link } from "react-router-dom";
 
 const SavedGraphs = () => {
@@ -15,15 +15,15 @@ const SavedGraphs = () => {
 
     return(
         <Layout>
-            <div className={gridWrap}>
-                <div className={titleWrap} >
+            <div className={styles.gridWrap}>
+                <div className={styles.titleWrap} >
                     <h3>Saved Graphs</h3>
                 </div>
 
-                <div className={grid}>
+                <div className={styles.grid}>
                     {
                         (user !== null && user.graphs !== undefined && user.graphs !== null) ?(      
-                            user.graphs.map( (graph, idx) => {
+                            user.graphs.map( (graph : any, idx : number) => {
                                     return <GraphItem graph={graph} idx={idx} />
                                 })
                         ): null
@@ -34,14 +34,19 @@ const SavedGraphs = () => {
     )
 }
 
-const GraphItem = ({graph, idx}) => { 
+type GraphItemProps = {
+    graph : any, 
+    idx: number
+}
+
+const GraphItem = ({graph, idx} : GraphItemProps) => { 
 
     return(
         <Link 
-            className={gridItem}
+            className={styles.gridItem}
             to={{
                 pathname: "/home",
-                state: { fromSavedGraph: idx }
+                search: `?saved-graph=${idx}`
             }}
          >
             <div>

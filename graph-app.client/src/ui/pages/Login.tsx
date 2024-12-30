@@ -8,13 +8,13 @@ const Login = ()=>{
     const {login, authenticated} = useContext(AuthContext)
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState<string>();
+    const [password, setPassword] = useState<string>();
 
 
     useEffect(()=>{
-        // if(authenticated)
-        //     navigate("/home")
+        if(authenticated)
+            navigate("/home")
     },[authenticated, history])
 
     const submit = () => {

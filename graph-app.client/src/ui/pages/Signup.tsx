@@ -9,10 +9,10 @@ const Signup = ()=>{
     const {signup, signupSuccess} = useContext(AuthContext)
     const navigate = useNavigate();
 
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [passwordConfirm, setPasswordConfirm] = useState();
+    const [name, setName] = useState<string>();
+    const [email, setEmail] = useState<string>();
+    const [password, setPassword] = useState<string>();
+    const [passwordConfirm, setPasswordConfirm] = useState<string>();
 
     useEffect(()=>{
         if(signupSuccess)
@@ -33,21 +33,21 @@ const Signup = ()=>{
         <Layout>
             <div className="signinPage">
                 <div className="signinWrap"> 
-                    <div class="form__group field">
-                        <input onChange={(e) =>setName(e.target.value)} type="input" class="form__field" placeholder="Name" name="name" id='name' required /> 
-                        <label for="name" class="form__label">Name</label>
+                    <div className="form__group field">
+                        <input onChange={(e) =>setName(e.target.value)} type="input" className="form__field" placeholder="Name" name="name" id='name' required /> 
+                        <label htmlFor="name" className="form__label">Name</label>
                     </div>
-                    <div class="form__group field">
-                        <input onChange={(e) =>setEmail(e.target.value)} type="input" class="form__field" placeholder="Email" name="email" id='email' required />
-                        <label for="email" class="form__label">Email</label>
+                    <div className="form__group field">
+                        <input onChange={(e) =>setEmail(e.target.value)} type="input" className="form__field" placeholder="Email" name="email" id='email' required />
+                        <label htmlFor="email" className="form__label">Email</label>
                     </div>
-                    <div class="form__group field">
-                        <input onChange={(e) =>setPassword(e.target.value)} type="input" class="form__field" placeholder="Password" name="password" id='password' required />
-                        <label for="password" class="form__label">Password</label>
+                    <div className="form__group field">
+                        <input onChange={(e) =>setPassword(e.target.value)} type="input" className="form__field" placeholder="Password" name="password" id='password' required />
+                        <label htmlFor="password" className="form__label">Password</label>
                     </div>
-                    <div class="form__group field">
-                        <input onChange={(e) =>setPasswordConfirm(e.target.value)} type="input" class="form__field" placeholder="Confirm Password" name="passwordconfirm" id='passwordconfirm' required />
-                        <label for="passwordconfirm" class="form__label">Password Confirm</label>
+                    <div className="form__group field">
+                        <input onChange={(e) =>setPasswordConfirm(e.target.value)} type="input" className="form__field" placeholder="Confirm Password" name="passwordconfirm" id='passwordconfirm' required />
+                        <label htmlFor="passwordconfirm" className="form__label">Password Confirm</label>
                     </div>
                     <button className="button" onClick={() =>submit()}>Submit</button>
                 </div>

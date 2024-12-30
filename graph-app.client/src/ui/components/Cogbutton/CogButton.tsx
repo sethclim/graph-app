@@ -1,9 +1,15 @@
-import {cogButton} from "./cogbutton.module.scss";
+import { MouseEventHandler } from "react";
+import styles from "./cogbutton.module.scss";
 
-const CogButton = ({onClick}) =>{
+
+type CogBUttonProps = {
+    onClick : MouseEventHandler<SVGSVGElement>
+}
+
+const CogButton = ({onClick} : CogBUttonProps) =>{
 
     return(
-        <div className={cogButton}>
+        <div className={styles.cogButton}>
             <svg 
                 aria-hidden="true" 
                 focusable="false" 

@@ -5,10 +5,10 @@ import { GraphContext } from "../../../domain/providers/GraphProvider";
 import DrawCanvas from "../Canvas/DrawCanvas";
 import Canvas from "../Canvas/Canvas";
 
-import {graphWrapper, graph, backgroundLayer, drawLayer } from "./graph.module.scss";
+import styles from "./graph.module.scss";
 
 const Graph = () => {
-  const graphRef = useRef();
+  const graphRef = useRef<HTMLDivElement>(null);
 
   const { xRange,yRange, dimensions, setDimensions} = useContext(GraphContext);
 
@@ -25,7 +25,7 @@ const Graph = () => {
     color
   } = useContext(InputContext);
 
-  const drawGridLines = (ctx) =>{
+  const drawGridLines = (ctx : any) =>{
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.beginPath();
     ctx.lineWidth = "2";
@@ -49,7 +49,7 @@ const Graph = () => {
     ctx.stroke();
   }
 
-  const drawAxis = (ctx) =>{
+  const drawAxis = (ctx : any) =>{
     ctx.beginPath();
     ctx.lineWidth = "5";
     ctx.strokeStyle = "blue";
@@ -87,12 +87,12 @@ const Graph = () => {
     let spacingY = ctx.canvas.height / yNumber;
 
     for(let i = 0; i < xNumber; i++){
-      const xNum = parseInt(xRange.min) + (xRange.step * i)
+      const xNum = xRange.min + (xRange.step * i)
       ctx.fillText(xNum, (spacingX * i) + 5, spacY * originLoc.y + 20);
     }
 
     for(let i = 0; i < yNumber; i++){
-      const yNum = parseInt(yRange.max) - (yRange.step * i)
+      const yNum = yRange.max - (yRange.step * i)
       ctx.fillText(yNum, spacX * originLoc.x + 5, (spacingY * i) + 20);
     }
 
@@ -100,7 +100,7 @@ const Graph = () => {
   }
 
 
-  const draw_LayerTwo = (ctx) => {
+  const draw_LayerTwo = (ctx : any) => {
     drawGridLines(ctx);
     drawAxis(ctx);
   };
@@ -120,31 +120,31 @@ const Graph = () => {
 
 
   return (
-    <div className={graphWrapper}>
-      <div id={graph} ref={graphRef}>
+    <div className={styles.graphWrapper}>
+      <div id={styles.graph} ref={graphRef}>
         <DrawCanvas
-          pen={penSelection}
-          id={drawLayer}
-          width={dimensions.width}
-          height={dimensions.height}
-          dots={dots}
-          setDots={setDots}
-          points={points}
-          setPoints={setPoints}
-          linePoints={linePoints}
-          setLinePoints={setLinePoints}
-          redraw={redraw}
-          setRedraw={setRedraw}
-          color={color}
-        />
+           pen={penSelection}
+           id={styles.drawLayer}
+           width={dimensions.width}
+           height={dimensions.height}
+           dots={dots}
+           setDots={setDots}
+           points={points}
+           setPoints={setPoints}
+           linePoints={linePoints}
+           setLinePoints={setLinePoints}
+           redraw={redraw}
+           setRedraw={setRedraw}
+           color={color}
+         />
         <Canvas
-          id={backgroundLayer}
+          id={styles.backgroundLayer}
           draw={draw_LayerTwo}
           width={dimensions.width}
           height={dimensions.height}
         />
-      </div>
-    </div>
+       </div>
+   </div>
   );
 };
 

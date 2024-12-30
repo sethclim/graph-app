@@ -1,8 +1,8 @@
-import {footer} from "./footer.module.scss";
+import styles from "./footer.module.scss";
 
 const Footer = () => {
   return (
-    <div className={footer}>
+    <div className={styles.footer}>
       <p>GraphApp ~Seth Climenhaga @2021</p>
     </div>
   );
