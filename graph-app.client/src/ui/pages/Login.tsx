@@ -1,20 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../domain/providers/AuthProvider";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import "../scss/signin.scss";
 import Layout from "../components/utility/Layout";
 
 const Login = ()=>{
     const {login, authenticated} = useContext(AuthContext)
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
 
     useEffect(()=>{
-        if(authenticated)
-            history.push("/home")
+        // if(authenticated)
+        //     navigate("/home")
     },[authenticated, history])
 
     const submit = () => {

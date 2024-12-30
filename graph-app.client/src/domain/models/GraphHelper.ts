@@ -30,17 +30,11 @@ export class GraphHelper{
     static getOriginLocation = (xRange : Range, yRange : Range) =>{
 
         let origin = GraphHelper.getOrigin(xRange, yRange);
-        let xOriginLoc = 0;
-        let yOriginLoc = 0;
-        for(let i = xRange.min; i < origin.x; i++)
-        {
-          xOriginLoc++
-        }
-    
-        for(let i = yRange.min; i < origin.y; i++)
-        {
-          yOriginLoc++
-        }
+
+        console.log(`origin ${JSON.stringify(origin)}`)
+
+        let xOriginLoc = origin.x - (xRange.min / xRange.step);
+        let yOriginLoc = Math.abs(yRange.max  / yRange.step) + Math.abs(origin.y);
     
         return(new Point(xOriginLoc, yOriginLoc))
     }

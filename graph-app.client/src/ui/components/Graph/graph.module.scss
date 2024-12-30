@@ -1,8 +1,8 @@
-@import "../../scss/base.scss";
+@use "../../scss/base.scss";
 
 .graphWrapper {
   grid-column: 4/11;
-  @include center-all;
+  @include base.center-all;
 }
 
 #graph {

@@ -8,7 +8,7 @@ export const usePost = (url : string) =>{
     const [success, setSuccess] = useState<any>();
 
 
-    const send = async (data : JSON) =>{
+    const send = async (data : string) =>{
         try{
             setSending(true)
             console.log("Sending...")

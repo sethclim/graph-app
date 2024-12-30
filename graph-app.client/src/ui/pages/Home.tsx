@@ -11,7 +11,7 @@ import { InputContext } from "../../domain/providers/InputProvider";
 import Layout from "../components/utility/Layout";
 
 
-const Home = ({location}) =>{
+const Home = () =>{
     const [controls, setControls] = useState()
     const [graphIndex, setGraphIndex] = useState(null) 
     
@@ -22,14 +22,14 @@ const Home = ({location}) =>{
     const handleControls = () =>{
         setControls(!controls)
     }
-    useEffect(()=>{
+    // useEffect(()=>{
 
-        if(location.state === undefined || location.state.fromSavedGraph === undefined)
-           return
+    //     if(location.state === undefined || location.state.fromSavedGraph === undefined)
+    //        return
 
-        setGraphIndex(location.state.fromSavedGraph)
+    //     setGraphIndex(location.state.fromSavedGraph)
            
-    },[location.state])
+    // },[location.state])
 
 
     useEffect(()=>{

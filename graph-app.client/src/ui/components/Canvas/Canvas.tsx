@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const Canvas = (props) => {
+const Canvas = (props : any) => {
   const { draw, onMyMouseMove, onMyMouseUp, width, height, ...rest } = props;
   const canvasRef = useRef(null);
 

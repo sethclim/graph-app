@@ -55,10 +55,10 @@ const Graph = () => {
     ctx.strokeStyle = "blue";
 
     let xR = {...xRange}
-    xR.step = 1
+    // xR.step = 1
 
     let yR = {...yRange}
-    yR.step = 1
+    // yR.step = 1
 
     let xNum = GraphHelper.getNumLines(xR)
     let yNum = GraphHelper.getNumLines(yR)
@@ -67,6 +67,8 @@ const Graph = () => {
     let spacY = ctx.canvas.height / yNum;
 
     let originLoc = GraphHelper.getOriginLocation(xR, yR)
+
+    console.log(`originLoc ${JSON.stringify(originLoc)}`)
 
     //X Axis
     ctx.moveTo(0, spacY * originLoc.y);

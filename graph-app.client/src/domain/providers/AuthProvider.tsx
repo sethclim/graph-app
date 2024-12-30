@@ -1,13 +1,35 @@
-import { createContext, useEffect, useState, useCallback } from "react";
+import { createContext, useEffect, useState, useCallback, PropsWithChildren } from "react";
 import { EndPoints } from "../constants/EndPoints";
 import { useFetch } from "../hooks/useFetch";
 import { usePost } from "../hooks/usePost";
 
-export const AuthContext = createContext();
+export interface IAuthContext   {
+    login : Function
+    signup : Function
+    loginSuccess : boolean
+    signupSuccess : any
+    authenticated: boolean,
+    token: undefined,
+    user : any,
+    reFetchUser : Function
+}
 
-const AuthProvider = ({ children }) => {
+const defaultAuthContext = {
+    login : () => null,
+    signup  : () => null,
+    loginSuccess : false,
+    signupSuccess : null,
+    authenticated: false,
+    token: undefined,
+    user : null,
+    reFetchUser  : () => null,
+}
+
+export const AuthContext = createContext<IAuthContext>(defaultAuthContext);
+
+const AuthProvider = (props : PropsWithChildren<any> )=> {
     const [authenticated, setAuthenticated] = useState(false);
-    const [token, setToken] = useState();
+    const [token, setToken] = useState(); 
 
     const { send: login, success: loginSuccess } = usePost(EndPoints.login);
     const { send: signup, success: signupSuccess } = usePost(EndPoints.signup);
@@ -35,7 +57,7 @@ const AuthProvider = ({ children }) => {
         getUserCallBack()
     }
 
-    const value = {
+    const value : IAuthContext = {
         login,
         signup,
         loginSuccess,
@@ -48,7 +70,7 @@ const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {children}
+            {props.children}
         </AuthContext.Provider>
     )
 }
