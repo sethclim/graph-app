@@ -56,7 +56,6 @@ const GraphControls = () => {
     else{
       console.log("No canvas")
     }
- 
   }
 
   return (
