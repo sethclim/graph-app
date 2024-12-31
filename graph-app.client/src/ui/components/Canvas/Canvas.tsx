@@ -39,7 +39,7 @@ const Canvas = (props : any) => {
     render();
   }, [draw, onMyMouseMove, onMyMouseUp, height, width]);
 
-  return <canvas id="canvas" ref={canvasRef} {...rest} />;
+  return <canvas id="canvas" ref={canvasRef} {...rest} data-id="canvas" />;
 };
 
 export default Canvas;

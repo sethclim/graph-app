@@ -446,7 +446,7 @@ const DrawCanvas = ({pen, width, height, points, setPoints, linePoints, setLineP
   },[isDrawing, points, setPoints])
 
   //Add actual ID here?
-  return <canvas id={id} ref={canvasRef} onMouseDown={mouseDown} />;
+  return <canvas id={id} ref={canvasRef} onMouseDown={mouseDown} data-id="draw-canvas" />;
 };
 
 export default DrawCanvas;

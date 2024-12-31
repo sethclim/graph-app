@@ -41,8 +41,9 @@ const GraphControls = () => {
   }
 
   const handleDownload = () => {
-    var bk_canvas = document.getElementById('graph_backgroundLayer__2hAx3') as HTMLCanvasElement;
-    var canvas = document.getElementById('graph_drawLayer__11e4q') as HTMLCanvasElement; 
+    console.log("Download")
+    var bk_canvas = document.querySelector('[data-id="canvas"]') as HTMLCanvasElement;
+    var canvas = document.querySelector('[data-id="draw-canvas"]') as HTMLCanvasElement; 
 
     if(canvas){
       var imgData = canvas.toDataURL("image/png", 1.0);
