@@ -3,6 +3,8 @@ import MainMenu from "../MainMenu/MainMenu";
 import { AuthContext } from "../../../domain/providers/AuthProvider";
 import { useContext } from "react";
 
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/react-router'
+
 import styles from "./Header.module.scss"
 
 const Header = () => {
@@ -24,9 +26,17 @@ const Header = () => {
 
           ) : (
             <div  className={styles.linkbtn}>
-              <Link to="/login">
-                Login
-              </Link>
+               <SignedOut>
+                <Link to="/login">
+                  Login
+                </Link>
+              </SignedOut>
+               {/* <SignedOut>
+                <SignInButton />
+              </SignedOut> */}
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
             </div>
           )
         }

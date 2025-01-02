@@ -2,7 +2,7 @@ import "./scss/base.scss";
 import "./scss/toplevel.scss";
 import Providers from "../domain/providers/index"
 import {lazy} from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 
 const Login = lazy(() => import("./pages/Login"))
@@ -18,7 +18,6 @@ function App() {
 
   return (
       <Providers>
-        <BrowserRouter>
           <Routes>
             <Route path={'/login'} element={<Login />} />
             <Route path={'/signup'} element={<Signup />} />
@@ -29,7 +28,6 @@ function App() {
             } />
             <Route path={'/'} element={<Home />} />
           </Routes>
-        </BrowserRouter>
       </Providers>
   );
 }
